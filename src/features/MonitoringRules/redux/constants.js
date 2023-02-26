@@ -1,0 +1,15 @@
+export const GET_RULE_LIST           = 'GET_RULE_LIST'
+export const GET_RULE_LIST_LOADING   = 'GET_RULE_LIST_LOADING'
+export const CREATE_RULE             = 'CREATE_RULE'
+export const CREATE_RULE_LOADING     = 'CREATE_RULE_LOADING'
+export const GET_RULE_DETAIL         = 'GET_RULE_DETAIL'
+export const GET_RULE_DETAIL_LOADING = 'GET_RULE_DETAIL_LOADING'
+export const UPDATE_RULE             = 'UPDATE_RULE'
+export const UPDATE_RULE_LOADING     = 'UPDATE_RULE_LOADING'
+export const DELETE_RULE             = 'DELETE_RULE'
+export const DELETE_RULE_LOADING     = 'DELETE_RULE_LOADING'
+
+export const GET_META_CONDITIONS         = 'GET_META_CONDITIONS'
+export const GET_META_CONDITIONS_LOADING = 'GET_META_CONDITIONS_LOADING'
+
+export const CLEAR_FORM_RULE = 'CLEAR_FORM_RULE'

@@ -1,0 +1,21 @@
+.recipe-carousel{
+
+    .title{
+        font-size: $fontSizeMedium;
+        font-weight: bold;
+    }
+    .recipe-list{
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+
+        .card-recipe{
+            display: inline-block;
+            width: 200px;
+            height: 200px;
+            margin: 0 6px;
+        }
+    }
+}
+
