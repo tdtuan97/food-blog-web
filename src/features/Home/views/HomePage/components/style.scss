@@ -1,21 +1,111 @@
-.recipe-carousel{
+.recipe-filter {
+    margin-bottom: 12px;
 
-    .title{
+    .title {
         font-size: $fontSizeMedium;
         font-weight: bold;
     }
-    .recipe-list{
-        display: block;
-        width: 100%;
-        max-width: 100%;
-        overflow-x: auto;
 
-        .card-recipe{
-            display: inline-block;
-            width: 200px;
-            height: 200px;
-            margin: 0 6px;
+    .items {
+        .badge-selections {
+            cursor: pointer;
+            background-color: #e9e7e7;
+            padding: 6px;
+            border-radius: 12px;
+
+            .badge-icon {
+                display: inline-block;
+            }
+
+            .badge-text {
+                margin-left: 3px;
+                display: inline-block;
+                line-height: 24px;
+            }
+
+            &:hover {
+                background-color: #bebaba;
+            }
+        }
+
+        .badge-selections.selected {
+            background-color: #bebaba;
         }
     }
 }
 
+.recipe-carousel {
+    .title {
+        font-size: $fontSizeMedium;
+        font-weight: bold;
+    }
+
+    .recipe-list {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 12px;
+        //overflow-x: auto;
+
+        .card-recipe {
+            display: inline-block;
+            //width: 200px;
+            height: 200px;
+            //margin: 0 6px;
+            margin-bottom: 12px;
+            position: relative;
+
+            .mask-card {
+                position: absolute;
+                width: 100%;
+                padding: 6px 12px;
+                left: 0;
+                bottom: 48px;
+                background-color: #00000069;
+                color: #ffffffe6;
+
+                .mark-title {
+                    text-decoration: none;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+
+                .mask-bottom {
+                    font-size: 9px;
+
+                    .mask-left {
+                        display: inline-block;
+                        float: left;
+
+                        text-decoration: none;
+
+                        &:hover {
+                            text-decoration: underline;
+                        }
+                    }
+
+                    .mask-right {
+                        display: inline-block;
+                        float: right;
+                    }
+                }
+            }
+
+            .like-action {
+                display: inline-block;
+
+                .like-number {
+                    margin-left: 3px;
+                    font-size: 14px;
+                    line-height: 14px;
+                }
+            }
+        }
+    }
+
+    .ant-card-body {
+        padding: 12px;
+    }
+}

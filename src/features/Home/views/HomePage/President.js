@@ -1,18 +1,43 @@
-import React, {Component} from 'react';
-import {Banner, RecipeCarousel} from "./components";
+import React, { Component } from 'react';
+import { Banner, RecipeCarousel } from "./components";
+import RecipeFilter from './components/RecipeFilter';
 
 class President extends Component {
     render() {
         return (
             <div className="features feature-home">
-                <RecipeCarousel listRecipe={recipeByWeek}/>
-                <Banner/>
+                <RecipeFilter
+                    title="Các nguyên liệu đang trong mùa"
+                    filterItems={filterItems} />
+
+                <RecipeCarousel
+                    listRecipe={recipeByWeek}
+                />
+                <RecipeCarousel
+                    title="Công thức mới từ người bạn theo dõi"
+                    listRecipe={recipeByWeek}
+                />
+                <RecipeCarousel
+                    title="Công thức phổ biến trong tuần"
+                    listRecipe={recipeByWeek}
+                />
             </div>
         );
     }
 }
 
 export default President;
+
+const filterItems = [
+    { "id": 1, "name": "Thịt bò", },
+    { "id": 2, "name": "Kim chi", },
+    { "id": 3, "name": "Giò lụa", },
+    { "id": 4, "name": "Cá ngừ", },
+    { "id": 5, "name": "Bắp cải", },
+    { "id": 6, "name": "Tôm khô", },
+    { "id": 7, "name": "Su hào", },
+    { "id": 8, "name": "Đậu hũ", },
+]
 
 const recipeByWeek = [
     {
