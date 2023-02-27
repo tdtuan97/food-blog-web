@@ -13,6 +13,10 @@
             padding: 6px;
             border-radius: 12px;
 
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none; /* IE 10 and IE 11 */
+            user-select: none; /* Standard syntax */
+
             .badge-icon {
                 display: inline-block;
             }
@@ -99,6 +103,14 @@
                 .like-number {
                     margin-left: 3px;
                     font-size: 14px;
+                    line-height: 14px;
+                }
+            }
+
+            .bookmark{
+                float: right;
+                img{
+                    height: 14px;
                     line-height: 14px;
                 }
             }

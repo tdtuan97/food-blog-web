@@ -1,28 +1,30 @@
 import React, {Component} from 'react';
 import recipeImgDefault from "@images/recipe-default.jpg";
 import {Link} from "react-router-dom";
-import {Card, Divider} from "antd";
+import {Card} from "antd";
 import {HeartOutlined, HeartFilled} from "@ant-design/icons";
+import imgBookmarkOn from "@images/bookmark_on.png"
+import imgBookmarkOff from "@images/bookmark_off.png"
 
 class RecipeCard extends Component {
     render() {
         const recipe = this.props.recipe;
         const isLike = false;
-        let data = {
-            "date": "23-02-2023 02:13:02 AM",
-            "recipeId": 10,
-            "recipeName": "Bánh mì",
-            "status": "CK",
-            "amount": 4,
+        let data     = {
+            "date"           : "23-02-2023 02:13:02 AM",
+            "recipeId"       : 10,
+            "recipeName"     : "Bánh mì",
+            "status"         : "CK",
+            "amount"         : 4,
             "preparationTime": 60,
-            "cookingTime": 60,
-            "numberOfLikes": 10,
-            "image": null,
-            "description": null,
-            "userId": 1,
-            "createdAt": "2023-02-23T02:13:02.254Z",
-            "updatedAt": "2023-02-23T02:13:02.254Z",
-            "count": "0"
+            "cookingTime"    : 60,
+            "numberOfLikes"  : 10,
+            "image"          : null,
+            "description"    : null,
+            "userId"         : 1,
+            "createdAt"      : "2023-02-23T02:13:02.254Z",
+            "updatedAt"      : "2023-02-23T02:13:02.254Z",
+            "count"          : "0"
         };
         return (
             <Card
@@ -63,6 +65,12 @@ class RecipeCard extends Component {
                         {recipe.numberOfLikes}
                     </span>
                 </div>
+                <span className="bookmark">
+                        <img
+                            src={imgBookmarkOff}
+                            alt=""
+                        />
+                    </span>
             </Card>
         )
     }
