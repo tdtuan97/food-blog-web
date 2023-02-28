@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import { RecipeCard } from "./";
-import { DataEmpty } from "@layouts";
-import { Col, Row } from 'antd';
+import React, {Component} from 'react';
+import {RecipeCard} from "./";
+import {DataEmpty, Loading} from "@layouts";
+import {Col, Row} from 'antd';
 
 class RecipeCarousel extends Component {
     render() {
-        const { listRecipe, title } = this.props
+        const {title, listRecipe, loading} = this.props
         return (
             <div className="recipe-carousel">
                 <div className="title">
@@ -14,14 +14,17 @@ class RecipeCarousel extends Component {
                 <div className="recipe-list">
                     <Row gutter={12}>
                         {
+                            loading === false && listRecipe.length === 0 ? <DataEmpty title="Không có công thức."/> : null
+                        }
+                        {
                             (listRecipe.length ?
                                 listRecipe.map((recipe, i) => {
                                     return (
                                         <Col span={6} key={i}>
-                                            <RecipeCard recipe={recipe} />
+                                            <RecipeCard recipe={recipe}/>
                                         </Col>
                                     )
-                                }) : <DataEmpty />)
+                                }) : null)
                         }
                     </Row>
                 </div>

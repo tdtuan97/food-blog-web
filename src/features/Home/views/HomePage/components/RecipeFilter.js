@@ -1,25 +1,22 @@
 import React, {Component} from 'react';
-import {AntButton, DataEmpty} from "@layouts";
+import {DataEmpty} from "@layouts";
 import {Col, Row, Avatar} from 'antd';
 
 import BadgeImageDefault from "@images/recipe-default.jpg"
 import {CheckCircleFilled} from '@ant-design/icons';
+import helpers from "@ultis/helpers";
 
 class RecipeFilter extends Component {
-    constructor(props) {
+    /*constructor(props) {
         super(props);
         this.state = {
             selected: [],
         }
-    }
+    }*/
 
-    /**
-     * On select badge
-     * @param e
-     */
-    onSelectBadge = (e) => {
+    /*onSelectBadge = (e) => {
         let id         = e.currentTarget.dataset.id ?? null
-        id             = id ? parseInt(id) : null
+        id             = id ? id : null
         let {selected} = this.state
         const idx      = selected.indexOf(id);
         if (idx !== -1) {
@@ -31,11 +28,16 @@ class RecipeFilter extends Component {
             ...this.state,
             selected: selected
         })
-    }
+    }*/
 
     render() {
-        const {filterItems, title} = this.props
-        const {selected}           = this.state;
+        const {
+                  loading,
+                  filterItems,
+                  title,
+                  ingredientSelected,
+                  onSelectedIngredient
+              } = this.props
 
         return (
             <div className="recipe-filter">
@@ -45,18 +47,22 @@ class RecipeFilter extends Component {
                 <div className="items">
                     <Row gutter={12}>
                         {
+                            loading === false && filterItems.length === 0 ?
+                                <DataEmpty title="Không có nguyên liệu."/> : null
+                        }
+                        {
                             (filterItems.length ?
                                 filterItems.map((item, i) => {
                                     return (
                                         <Col span={3} key={i}>
                                             <div
-                                                className={"badge-selections" + (selected.indexOf(item.id) !== -1 ? " selected" : "")}
-                                                onClick={this.onSelectBadge}
-                                                data-id={item.id}
+                                                className={"badge-selections" + (ingredientSelected === item.ingredientId ? " selected" : "")}
+                                                onClick={onSelectedIngredient}
+                                                data-id={item.ingredientId}
                                             >
                                                 <div className="badge-icon">
                                                     {
-                                                        selected.indexOf(item.id) !== -1 ?
+                                                        ingredientSelected === item.ingredientId ?
                                                             <Avatar
                                                                 size="small"
                                                                 icon={<CheckCircleFilled style={{color: "#23b123"}}/>}
@@ -64,7 +70,8 @@ class RecipeFilter extends Component {
                                                             :
                                                             <Avatar
                                                                 size="small"
-                                                                src={<img src={BadgeImageDefault} alt="avatar"/>}
+                                                                src={<img src={helpers.generateFullImage(item.image) ?? BadgeImageDefault}
+                                                                          alt=""/>}
                                                             />
                                                     }
                                                 </div>
@@ -74,7 +81,7 @@ class RecipeFilter extends Component {
                                             </div>
                                         </Col>
                                     )
-                                }) : <DataEmpty/>)
+                                }) : null)
                         }
                     </Row>
                 </div>

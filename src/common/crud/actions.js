@@ -240,7 +240,7 @@ export function reject(dispatch, reason, callback) {
     }
 
     // For case auth
-    if (responseData.status === CODE_UNAUTHENTICATED || responseData.code === CODE_UNAUTHENTICATED) {
+    if (responseData.status === CODE_UNAUTHENTICATED || responseData.code === CODE_UNAUTHENTICATED || responseData.status === 403) {
         dispatch(clearToken())
     }
 }

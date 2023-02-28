@@ -6,6 +6,10 @@ const helpers = {
         return process.env.REACT_APP_API_ENDPOINT
     },
 
+    generateFullImage: function (string){
+        return string ? (process.env.REACT_APP_BASE_URL + string) : null;
+    },
+
     formatCash: function (value, currency = 'VNĐ') {
         value = value.toString();
         return value.split('').reverse().reduce((prev, next, index) => {

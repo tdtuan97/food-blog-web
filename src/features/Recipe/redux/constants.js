@@ -1,0 +1,2 @@
+export const RECIPE_DETAIL         = 'RECIPE_DETAIL';
+export const RECIPE_DETAIL_LOADING = 'RECIPE_DETAIL_LOADING';

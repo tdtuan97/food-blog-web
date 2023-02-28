@@ -1,31 +1,24 @@
 import React, {Component} from 'react';
 import recipeImgDefault from "@images/recipe-default.jpg";
-import {Link} from "react-router-dom";
 import {Card} from "antd";
 import {HeartOutlined, HeartFilled} from "@ant-design/icons";
 import imgBookmarkOn from "@images/bookmark_on.png"
 import imgBookmarkOff from "@images/bookmark_off.png"
+import helpers from "@ultis/helpers";
+import {withRouter} from "react-router-dom";
 
 class RecipeCard extends Component {
+
+    /**
+     * Redirect to detail page
+     */
+    redirectToDetail=()=> {
+        this.props.history.push(`recipe/${this.props.recipe.recipeId}`)
+    }
+
     render() {
         const recipe = this.props.recipe;
         const isLike = false;
-        let data     = {
-            "date"           : "23-02-2023 02:13:02 AM",
-            "recipeId"       : 10,
-            "recipeName"     : "Bánh mì",
-            "status"         : "CK",
-            "amount"         : 4,
-            "preparationTime": 60,
-            "cookingTime"    : 60,
-            "numberOfLikes"  : 10,
-            "image"          : null,
-            "description"    : null,
-            "userId"         : 1,
-            "createdAt"      : "2023-02-23T02:13:02.254Z",
-            "updatedAt"      : "2023-02-23T02:13:02.254Z",
-            "count"          : "0"
-        };
         return (
             <Card
                 className="card-recipe"
@@ -33,9 +26,10 @@ class RecipeCard extends Component {
                 cover={
                     <img
                         alt=""
-                        src={recipe.image ?? recipeImgDefault}
+                        src={helpers.generateFullImage(recipe.image) ?? recipeImgDefault}
                     />
                 }
+                onClick={this.redirectToDetail}
             >
                 <div className="mask-card">
                     <div className="mark-title">
@@ -70,10 +64,10 @@ class RecipeCard extends Component {
                             src={imgBookmarkOff}
                             alt=""
                         />
-                    </span>
+                </span>
             </Card>
         )
     }
 }
 
-export default RecipeCard;
+export default withRouter(RecipeCard)

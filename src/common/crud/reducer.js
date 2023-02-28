@@ -20,7 +20,7 @@ export function reducer(state = initialState, action) {
                 loading: true
             };
         case RESPONSE_ACTION:
-            if (payload.status >= 400) {
+            if (payload.status >= 400 && payload.status !== 428) {
                 pushMessageError(payload.message);
             }
 
