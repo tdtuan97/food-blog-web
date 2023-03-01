@@ -1,26 +1,227 @@
 import React, {Component} from 'react';
 import {RecipeImageCover} from "./components";
 import helpers from "@ultis/helpers";
-import {DataEmpty, Loading} from "@layouts";
+import {AntButton, DataEmpty, Loading} from "@layouts";
 import recipeImgDefault from "@images/recipe-default.jpg";
+import {Avatar, Col, Row} from "antd";
+import {ClockCircleOutlined, FieldTimeOutlined, UserOutlined} from "@ant-design/icons";
+import BadgeImageDefault from "@images/recipe-default.jpg";
+import {Input} from 'antd';
+
+const {TextArea} = Input;
 
 class President extends Component {
     render() {
-        const {
-                  detail,
-              } = this.props
+        let {
+                comments,
+                detail,
+
+                commentText,
+                onChangeComment,
+                onSubmitComment,
+            } = this.props
+
+        comments = comments ? comments.data : [];
+        comments = comments.length > 0 ? comments[0] : {};
+        comments = comments.comment ?? []
 
         let data    = detail.data ?? {}
         let loading = detail.loading
+
+        let {
+                recipe,
+                ingredient,
+            }      = data
+        recipe     = recipe ?? {}
+        ingredient = ingredient ?? {}
+        let user   = recipe.User ?? {}
+        let steps  = recipe.Steps ?? []
+        let {
+                amount,
+                cookingTime,
+                date,
+                description,
+                image,
+                numberOfLikes,
+                preparationTime,
+                recipeId,
+                recipeName,
+                status,
+                userId,
+            }      = recipe
+
         return (
             <div className="features feature-detail">
                 {
                     loading ? <Loading/> : null
                 }
                 {
-                    data.recipeId ? <RecipeImageCover
-                        image={helpers.generateFullImage(data.image) ?? recipeImgDefault}
-                    /> : <DataEmpty title="Không tìm thấy công thức"/>
+                    recipe.recipeId ?
+                        <div className="recipe-detail-wrap">
+                            <RecipeImageCover
+                                image={helpers.generateFullImage(image) ?? recipeImgDefault}
+                            />
+                            <div className="content-detail">
+                                <div className="detail-component title">
+                                    {recipeName ?? ""}
+                                </div>
+                                <div className="detail-component recipe-auth">
+                                    <span className="auth-avatar">{
+                                        helpers.generateFullImage(user.avatar) ?
+                                            <Avatar
+                                                src={<img
+                                                    src={helpers.generateFullImage(user.avatar) ?? BadgeImageDefault}
+                                                    alt=""/>}
+                                            /> : <Avatar
+                                                icon={<UserOutlined/>}
+                                            />
+                                    }</span>
+                                    <span className="auth-name">{user.fullName}</span>
+                                    <span className="auth-last-update">	• 1 giờ trước</span>
+                                </div>
+                                {
+                                    description ?
+                                        <div className="detail-component description">
+                                            {description}
+                                        </div> : <div className="detail-component description text-center">
+                                            Không có mô tả về công thức này.
+                                        </div>
+                                }
+                                <div className="detail-component information">
+                                    <Row gutter={12} className="text-center">
+                                        <Col span={8}>
+                                            <div>
+                                                <UserOutlined style={{fontSize: 36, color: "purple"}}/>
+                                            </div>
+                                            <div>
+                                                Khẩu phần
+                                            </div>
+                                            <div className="infor-value">
+                                                {amount} người
+                                            </div>
+                                        </Col>
+                                        <Col span={8}>
+                                            <FieldTimeOutlined style={{fontSize: 36, color: "#e9a32970"}}/>
+                                            <div>
+                                                Chuẩn bị
+                                            </div>
+                                            <div className="infor-value">
+                                                {preparationTime} phút
+                                            </div>
+                                        </Col>
+                                        <Col span={8}>
+                                            <ClockCircleOutlined style={{fontSize: 36, color: "red"}}/>
+                                            <div>
+                                                Thực hiện
+                                            </div>
+                                            <div className="infor-value">
+                                                {cookingTime} phút
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                </div>
+                                <div className="detail-component ingredient">
+                                    <div className="label">
+                                        Nguyên liệu
+                                    </div>
+                                    <div className="ingredient-list">
+                                        {
+                                            (ingredient.length ?
+                                                ingredient.map((item, i) => {
+                                                    return (
+                                                        <div className="ingredient-item" key={i}>
+                                                            {item.amount ?? ""} {item.ingredientName ?? ""}
+                                                        </div>
+                                                    )
+                                                }) : null)
+                                        }
+                                    </div>
+                                </div>
+                                <div className="detail-component steps">
+                                    <div className="label">
+                                        Thực hiện
+                                    </div>
+                                    <div className="step-list">
+                                        {
+                                            (steps.length ?
+                                                steps.map((item, i) => {
+                                                    return (
+                                                        <div className="step-item" key={i}>
+                                                            <div className="step-num">
+                                                                Bước {i + 1}
+                                                            </div>
+                                                            <div className="step-description">
+                                                                {item.description}
+                                                            </div>
+                                                            {
+                                                                helpers.generateFullImage(item.image) ?
+                                                                    <div className="step-img">
+                                                                        <img
+                                                                            src={helpers.generateFullImage(item.image) ?? recipeImgDefault}
+                                                                            alt=""/>
+                                                                    </div> : null
+                                                            }
+                                                        </div>
+                                                    )
+                                                }) : null)
+                                        }
+                                    </div>
+                                </div>
+                                <hr className="detail-component line-split"/>
+                                <div className="detail-component comments">
+                                    <div className="comment-area">
+                                        <div>
+                                            <TextArea
+                                                rows={4}
+                                                placeholder="Viết bình luận"
+                                                value={commentText}
+                                                onChange={onChangeComment}
+                                            />
+                                        </div>
+                                        <div className="comment-action">
+                                            <AntButton
+                                                type="primary"
+                                                onClick={onSubmitComment}
+                                            >
+                                                Bình luận
+                                            </AntButton>
+                                        </div>
+                                    </div>
+                                    <div className="label">
+                                        Tất cả tương tác
+                                    </div>
+                                    <div className="user-comments">
+                                        {
+                                            (comments.length ?
+                                                comments.map((item, i) => {
+                                                    let commentUser = item.User ?? {}
+                                                    return (
+                                                        <div className="comment-item" key={i}>
+                                                            <div className="left">
+                                                                <Avatar
+                                                                    src={<img
+                                                                        src={helpers.generateFullImage(commentUser.avatar) ?? BadgeImageDefault}
+                                                                        alt=""/>}
+                                                                />
+                                                            </div>
+                                                            <div className="right">
+                                                                <div className="comment-auth">
+                                                                    <span className="label">{commentUser.fullName}</span>
+                                                                    <span className="comment-last-update">	• 1 giờ trước</span>
+                                                                </div>
+                                                                <div className="comment-text">
+                                                                    {item.comment}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                }) : null)
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        : <DataEmpty title="Không tìm thấy công thức"/>
                 }
             </div>
         );
