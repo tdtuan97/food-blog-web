@@ -2,6 +2,31 @@ import {apiGet, apiPost} from "@common/crud";
 import * as CONSTANTS from "./constants";
 
 /**
+ * Get recipe all
+ * @returns
+ */
+export function getRecipeManagement() {
+    return dispatch => {
+        dispatch(getRecipeManagementLoadingAction())
+        dispatch(apiGet('recipe/getAllRecipe', {}, {}, getRecipeManagementAction))
+    };
+}
+
+function getRecipeManagementAction(response) {
+    return {
+        type   : CONSTANTS.RECIPE_MANAGEMENT,
+        payload: response
+    };
+}
+
+function getRecipeManagementLoadingAction() {
+    return {
+        type   : CONSTANTS.RECIPE_MANAGEMENT_LOADING,
+        payload: null
+    };
+}
+
+/**
  * Get recipe by id
  * @returns
  */

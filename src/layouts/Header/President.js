@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {
     MenuOutlined,
 } from '@ant-design/icons';
-import { Input } from 'antd';
+import {Input} from 'antd';
 import {Link} from "react-router-dom";
 import {Logo} from "../Logo";
 import {AntButton} from "../AntButton";
@@ -13,10 +13,10 @@ class President extends Component {
         const {
                   common,
                   handleToggleSider
-              } = this.props
+              }              = this.props
         const siderCollapsed = common.siderCollapsed
         const classBtnToggle = siderCollapsed ? 'action-control close' : 'action-control'
-        const classLogo = siderCollapsed ? 'logo close' : 'logo'
+        const classLogo      = siderCollapsed ? 'logo close' : 'logo'
 
         return (
             <header className="page-header">
@@ -29,12 +29,13 @@ class President extends Component {
                             onClick={handleToggleSider}
                         />
                     </div>
-                    <div className={classLogo}>
-                        <Link to="/">
-                            <Logo src={logoUrl}/>
-                        </Link>
-                    </div>
+
                     <div className="page-header-control">
+                        <div className={classLogo}>
+                            <Link to="/">
+                                <Logo src={logoUrl}/>
+                            </Link>
+                        </div>
                         <div className="search-input">
                             <Input
                                 placeholder="Gõ nguyên liệu để tìm kiếm"
@@ -43,12 +44,14 @@ class President extends Component {
                             />
                         </div>
                         <div className="status-control">
-                            {/*<div className="group-status">
-                                <span className="group-label"><ThunderboltFilled/></span>
-                                <span className="group-item highlight"><WifiOutlined/></span>
-                                <span className="group-item highlight"><LineOutlined/></span>
-                                <span className="group-item highlight"><LineOutlined/></span>
-                            </div>*/}
+                            <div className="group-status">
+                                <Link
+                                    to={'/recipe'}
+                                    className="group-label"
+                                >
+                                    Management
+                                </Link>
+                            </div>
                         </div>
                     </div>
                 </div>

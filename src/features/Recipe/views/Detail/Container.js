@@ -67,8 +67,8 @@ class Container extends Component {
         let currentPostComment = this.props.recipe.postComment
         let prevPostComment = prevProps.recipe.postComment
 
-        console.log(currentPostComment)
-        console.log(prevPostComment)
+        //console.log(currentPostComment)
+        //console.log(prevPostComment)
     }
 }
 

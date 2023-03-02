@@ -21,9 +21,12 @@ class President extends Component {
                 onSubmitComment,
             } = this.props
 
-        comments = comments ? comments.data : [];
-        comments = comments.length > 0 ? comments[0] : {};
-        comments = comments.comment ?? []
+        comments = comments ? comments.data : {};
+        let userComments = comments.comment ?? [];
+        let myComment = comments.myComment ?? {}
+
+        console.log(userComments)
+        console.log(myComment)
 
         let data    = detail.data ?? {}
         let loading = detail.loading
@@ -192,8 +195,8 @@ class President extends Component {
                                     </div>
                                     <div className="user-comments">
                                         {
-                                            (comments.length ?
-                                                comments.map((item, i) => {
+                                            (userComments.length ?
+                                                userComments.map((item, i) => {
                                                     let commentUser = item.User ?? {}
                                                     return (
                                                         <div className="comment-item" key={i}>
@@ -211,6 +214,20 @@ class President extends Component {
                                                                 </div>
                                                                 <div className="comment-text">
                                                                     {item.comment}
+                                                                </div>
+                                                                <div className="comment-self-action">
+                                                                    <AntButton
+                                                                        className="btn-action btn-update"
+                                                                        type="link"
+                                                                    >
+                                                                        Chỉnh sửa
+                                                                    </AntButton>
+                                                                    <AntButton
+                                                                        className="btn-action btn-delete"
+                                                                        type="link"
+                                                                    >
+                                                                        Xoá
+                                                                    </AntButton>
                                                                 </div>
                                                             </div>
                                                         </div>

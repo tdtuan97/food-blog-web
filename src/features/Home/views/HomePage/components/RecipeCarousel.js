@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {RecipeCard} from "./";
-import {DataEmpty, Loading} from "@layouts";
+import {DataEmpty} from "@layouts";
 import {Col, Row} from 'antd';
 
 class RecipeCarousel extends Component {

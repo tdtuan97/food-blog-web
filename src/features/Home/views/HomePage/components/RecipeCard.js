@@ -13,7 +13,7 @@ class RecipeCard extends Component {
      * Redirect to detail page
      */
     redirectToDetail=()=> {
-        this.props.history.push(`recipe/${this.props.recipe.recipeId}`)
+        this.props.history.push(`recipe/${this.props.recipe.recipeId}/detail`)
     }
 
     render() {
