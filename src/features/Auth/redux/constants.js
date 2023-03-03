@@ -6,3 +6,9 @@ export const ARG_TOKEN           = 'FOOD-BLOG-'
 
 export const REGISTER         = 'REGISTER'
 export const REGISTER_LOADING = 'REGISTER_LOADING'
+
+export const GET_AUTH_USER         = 'GET_AUTH_USER'
+export const GET_AUTH_USER_LOADING = 'GET_AUTH_USER_LOADING'
+
+export const UPDATE_AUTH_USER         = 'UPDATE_AUTH_USER'
+export const UPDATE_AUTH_USER_LOADING = 'UPDATE_AUTH_USER_LOADING'

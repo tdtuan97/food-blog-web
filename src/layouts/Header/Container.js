@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import President from './President';
 import {connect} from 'react-redux';
-import {clearToken} from "@features/Auth/redux/actions";
+import {clearToken, getAuthUser} from "@features/Auth/redux/actions";
 import {toggleSider} from "@features/Common/redux";
 
 class Container extends Component {
@@ -11,12 +11,20 @@ class Container extends Component {
             {...this.props}
             common={this.props.common}
             handleToggleSider={this.props.toggleSider}
+            handleLogout={this.props.clearToken}
         />)
+    }
+
+    componentDidMount() {
+        this.props.getAuthUser()
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
+        getAuthUser              : () => {
+            dispatch(getAuthUser());
+        },
         clearToken              : () => {
             dispatch(clearToken());
         },

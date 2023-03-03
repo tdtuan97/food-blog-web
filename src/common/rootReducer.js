@@ -6,6 +6,7 @@ import {reducer as CommonReducer} from "@features/Common/redux/reducer"
 import {reducer as AuthReducer} from "@features/Auth/redux/reducer"
 import {reducer as HomeReducer} from "@features/Home/redux/reducer"
 import {reducer as RecipeReducer} from "@features/Recipe/redux/reducer"
+import {reducer as UserReducer} from "@features/User/redux/reducer"
 //import {reducer as EventReducer} from "@features/Event/redux/reducer"
 
 const reducerMap = {
@@ -15,6 +16,7 @@ const reducerMap = {
     auth  : AuthReducer,
     home  : HomeReducer,
     recipe: RecipeReducer,
+    user  : UserReducer,
 };
 
 export default combineReducers(reducerMap);

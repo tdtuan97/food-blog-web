@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Form, Input} from "antd";
-import {MailOutlined, LockOutlined} from '@ant-design/icons';
+import {LockOutlined, UserOutlined} from '@ant-design/icons';
 import {AntButton, AntFormItem,} from "@layouts";
 import {Link} from "react-router-dom";
 
@@ -22,7 +22,7 @@ class President extends Component {
                         name="accountName"
                     >
                         <Input
-                            prefix={<MailOutlined className="site-form-item-icon"/>}
+                            prefix={<UserOutlined className="site-form-item-icon"/>}
                             placeholder="Tài khoản"
                         />
                     </AntFormItem>

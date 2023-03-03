@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {RecipeCard} from "./";
-import {DataEmpty} from "@layouts";
+import {DataEmpty, Loading} from "@layouts";
 import {Col, Row} from 'antd';
 
 class RecipeCarousel extends Component {
@@ -13,6 +13,9 @@ class RecipeCarousel extends Component {
                 </div>
                 <div className="recipe-list">
                     <Row gutter={12}>
+                        {
+                            loading ? <Loading/> : null
+                        }
                         {
                             loading === false && listRecipe.length === 0 ? <DataEmpty title="Không có công thức."/> : null
                         }

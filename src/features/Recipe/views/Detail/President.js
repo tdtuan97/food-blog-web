@@ -59,6 +59,9 @@ class President extends Component {
                     loading ? <Loading/> : null
                 }
                 {
+                    (loading === false && !recipe.recipeId) ? <DataEmpty title="Không tìm thấy công thức"/> : null
+                }
+                {
                     recipe.recipeId ?
                         <div className="recipe-detail-wrap">
                             <RecipeImageCover
@@ -238,7 +241,7 @@ class President extends Component {
                                 </div>
                             </div>
                         </div>
-                        : <DataEmpty title="Không tìm thấy công thức"/>
+                        : null
                 }
             </div>
         );

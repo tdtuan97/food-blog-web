@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import President from './President';
 import {getRecipe, getRecipeComments, postRecipeComment} from "@features/Recipe/redux/actions";
 import {withRouter} from "react-router-dom";
+import {reset} from "@common/crud";
 
 class Container extends Component {
     constructor(props) {
@@ -70,6 +71,10 @@ class Container extends Component {
         //console.log(currentPostComment)
         //console.log(prevPostComment)
     }
+
+    componentWillUnmount() {
+        this.props.reset()
+    }
 }
 
 function mapDispatchToProps(dispatch) {
@@ -84,6 +89,10 @@ function mapDispatchToProps(dispatch) {
 
         postRecipeComment: (id, value) => {
             dispatch(postRecipeComment(id, value));
+        },
+
+        reset: () => {
+            dispatch(reset());
         },
     };
 }

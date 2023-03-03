@@ -2,17 +2,23 @@ import {
     LOGIN_LOADING,
     SET_TOKEN_ACTION,
     CLEAR_TOKEN_ACTION,
-    ARG_TOKEN, REGISTER_LOADING, REGISTER,
+    ARG_TOKEN,
+    REGISTER_LOADING,
+    REGISTER,
+    GET_AUTH_USER_LOADING,
+    GET_AUTH_USER,
+    UPDATE_AUTH_USER,
+    UPDATE_AUTH_USER_LOADING,
 } from "./constants";
 
-import {apiPost} from "@common/crud";
+import {apiGet, apiPost, apiPut} from "@common/crud";
 
 export function login(params) {
     return dispatch => {
         dispatch(loginLoadingAction())
         dispatch(apiPost('auth/login', {
             accountName: params.accountName,
-            password: params.password,
+            password   : params.password,
         }, {}, setTokenAction))
     }
 }
@@ -71,6 +77,54 @@ export function registerLoadingAction() {
 export function registerAction(data) {
     return {
         type   : REGISTER,
+        payload: data
+    };
+}
+
+export function getAuthUser() {
+    return dispatch => {
+        dispatch(getAuthUserLoadingAction())
+        dispatch(apiGet('auth', {}, {}, getAuthUserAction))
+    }
+}
+
+export function getAuthUserLoadingAction() {
+    return {
+        type   : GET_AUTH_USER_LOADING,
+        payload: null
+    };
+}
+
+export function getAuthUserAction(data) {
+    return {
+        type   : GET_AUTH_USER,
+        payload: data
+    };
+}
+
+export function updateAuthUser(data) {
+    return dispatch => {
+        dispatch(updateAuthUserLoadingAction())
+        dispatch(apiPut('user/update/', {
+            fullName   : data.fullName ?? null,
+            email      : data.email ?? null,
+            introduce  : data.introduce ?? null,
+            dateOfBirth: data.dateOfBirth ?? null,
+            address    : data.address ?? null,
+        }, {}, updateAuthUserAction))
+    }
+}
+
+export function updateAuthUserLoadingAction() {
+    return {
+        type   : UPDATE_AUTH_USER_LOADING,
+        payload: null
+    };
+}
+
+export function updateAuthUserAction(data) {
+    return {
+        type   : UPDATE_AUTH_USER,
         payload: data
     };
 }

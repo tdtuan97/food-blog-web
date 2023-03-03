@@ -1,5 +1,6 @@
 import initialState from "./initialState";
 import * as CONSTANTS from "./constants";
+import {RESET_ACTION} from "@features/Common/redux/constants";
 
 export function reducer(state = initialState, action) {
     let payload = action.payload;
@@ -8,6 +9,11 @@ export function reducer(state = initialState, action) {
         /**
          * Reset action
          */
+        case RESET_ACTION:
+            return {
+                ...state,
+                ...initialState
+            }
         case CONSTANTS.RECIPE_MANAGEMENT:
             data = payload.data ?? {}
             return {

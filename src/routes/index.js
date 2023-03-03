@@ -6,6 +6,7 @@ import {ExceptionRoute} from './ExceptionRoute'
 import * as Auth from '@features/Auth'
 import * as Home from '@features/Home'
 import * as Recipe from '@features/Recipe'
+import * as User from '@features/User'
 import {ErrorPage} from "@features/Exceptions";
 
 class AllRoutes extends Component {
@@ -35,6 +36,17 @@ class AllRoutes extends Component {
                 <PrivateRoute path="/recipe/:id/detail/" layout='App' exact={true}>
                     <Recipe.Detail/>
                 </PrivateRoute>
+
+                <PrivateRoute path="/account" layout='App'>
+                    <User.Account/>
+                </PrivateRoute>
+                <PrivateRoute path="/profile" layout='App'>
+                    <User.SelfProfile/>
+                </PrivateRoute>
+                <PrivateRoute path="/user/:id" layout='App'>
+                    <User.PublicProfile/>
+                </PrivateRoute>
+
                 <ExceptionRoute path="*"><ErrorPage code={404}/></ExceptionRoute>
             </Switch>
         );

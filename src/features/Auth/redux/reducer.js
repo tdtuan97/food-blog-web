@@ -1,9 +1,17 @@
 import initialState from "./initialState";
 import {
-    SET_TOKEN_ACTION, CLEAR_TOKEN_ACTION, ARG_TOKEN, LOGIN_LOADING, UPDATE_TOKEN_ACTION, REGISTER_LOADING, REGISTER
+    SET_TOKEN_ACTION,
+    CLEAR_TOKEN_ACTION,
+    ARG_TOKEN,
+    LOGIN_LOADING,
+    UPDATE_TOKEN_ACTION,
+    REGISTER_LOADING,
+    REGISTER,
+    GET_AUTH_USER, UPDATE_AUTH_USER, UPDATE_AUTH_USER_LOADING, GET_AUTH_USER_LOADING
 } from "./constants";
 import {pushMessageSuccess} from "@layouts";
 import * as CONSTANTS_COMMON from "@features/Common/redux/constants";
+import moment from "moment";
 
 export function reducer(state = initialState, action) {
     const stateLocal = loadStateFromLocal();
@@ -61,6 +69,83 @@ export function reducer(state = initialState, action) {
                     data   : action.payload
                 }
             };
+        case GET_AUTH_USER:
+            let authUser    = action.payload ?? {}
+            authUser        = authUser.data ?? {}
+            let dateOfBirth = authUser.dateOfBirth !== 'Invalid date' ? moment(authUser.dateOfBirth) : moment();
+
+            return {
+                ...state,
+                authUser: {
+                    ...state.authUser,
+                    userId     : authUser.userId ?? null,
+                    fullName   : authUser.fullName ?? null,
+                    email      : authUser.email ?? null,
+                    introduce  : authUser.introduce ?? null,
+                    avatar     : authUser.avatar ?? null,
+                    dateOfBirth: dateOfBirth,
+                    address    : authUser.address ?? null,
+
+                    loading: false,
+                }
+            };
+        case GET_AUTH_USER_LOADING:
+            return {
+                ...state,
+                authUser: {
+                    ...state.authUser,
+                    loading: true,
+                }
+            };
+        case UPDATE_AUTH_USER:
+            let updateAuthUser = action.payload ?? {}
+            if (updateAuthUser.success === true) {
+                updateAuthUser        = updateAuthUser.data ?? {}
+                let updateDateOfBirth = updateAuthUser.dateOfBirth !== 'Invalid date' ? moment(updateAuthUser.dateOfBirth) : moment();
+
+                return {
+                    ...state,
+                    authUser: {
+                        ...state.authUser,
+                        userId     : updateAuthUser.userId ?? null,
+                        fullName   : updateAuthUser.fullName ?? null,
+                        email      : updateAuthUser.email ?? null,
+                        introduce  : updateAuthUser.introduce ?? null,
+                        avatar     : updateAuthUser.avatar ?? null,
+                        dateOfBirth: updateDateOfBirth,
+                        address    : updateAuthUser.address ?? null,
+                    },
+                    update  : {
+                        ...state.update,
+                        loading: false,
+                        data   : {
+                            userId     : updateAuthUser.userId ?? null,
+                            fullName   : updateAuthUser.fullName ?? null,
+                            email      : updateAuthUser.email ?? null,
+                            introduce  : updateAuthUser.introduce ?? null,
+                            avatar     : updateAuthUser.avatar ?? null,
+                            dateOfBirth: updateDateOfBirth,
+                            address    : updateAuthUser.address ?? null,
+                        }
+                    }
+                };
+            }
+            return {
+                ...state,
+                update: {
+                    ...state.update,
+                    loading: false
+                }
+            };
+
+        case UPDATE_AUTH_USER_LOADING:
+            return {
+                ...state,
+                update: {
+                    ...state.update,
+                    loading: true
+                }
+            };
         default:
             return {
                 ...state,
@@ -104,12 +189,12 @@ export function loadStateFromLocal() {
         // Render config homepage
         stateFromLocal = {
             user   : {
-                id       : dataLocal._id ?? '',
-                name     : dataLocal.name ?? '',
-                email    : dataLocal.email ?? '',
+                id   : dataLocal._id ?? '',
+                name : dataLocal.name ?? '',
+                email: dataLocal.email ?? '',
             },
             meta   : {
-                token      : token,
+                token: token,
             },
             configs: {
                 homepage: '/'

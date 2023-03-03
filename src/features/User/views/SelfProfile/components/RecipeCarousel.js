@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {RecipeItem} from "./";
-import {DataEmpty, Loading} from "@layouts";
+import {RecipeCard} from "./";
+import {DataEmpty} from "@layouts";
 import {Col, Row} from 'antd';
 
-class UserRecipes extends Component {
+class RecipeCarousel extends Component {
     render() {
         const {title, listRecipe, loading} = this.props
         return (
@@ -14,9 +14,6 @@ class UserRecipes extends Component {
                 <div className="recipe-list">
                     <Row gutter={12}>
                         {
-                            loading ? <Loading/> : null
-                        }
-                        {
                             loading === false && listRecipe.length === 0 ? <DataEmpty title="Không có công thức."/> : null
                         }
                         {
@@ -24,7 +21,7 @@ class UserRecipes extends Component {
                                 listRecipe.map((recipe, i) => {
                                     return (
                                         <Col span={6} key={i}>
-                                            <RecipeItem recipe={recipe}/>
+                                            <RecipeCard recipe={recipe}/>
                                         </Col>
                                     )
                                 }) : null)
@@ -36,4 +33,4 @@ class UserRecipes extends Component {
     }
 }
 
-export default UserRecipes;
+export default RecipeCarousel;
