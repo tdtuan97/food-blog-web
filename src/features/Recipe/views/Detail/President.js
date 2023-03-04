@@ -216,7 +216,6 @@ class President extends Component {
                                         }
                                     </div>
                                 </div>
-                                <hr className="detail-component line-split"/>
                                 <div className="detail-component comments">
                                     <div className="comment-area">
                                         <div>
