@@ -24,6 +24,9 @@ class AllRoutes extends Component {
                 <PrivateRoute path="/homepage" layout='App'>
                     <Home.HomePage/>
                 </PrivateRoute>
+                <PrivateRoute path="/food-blog-web" layout='App' exact={true}>
+                    <Home.HomePage/>
+                </PrivateRoute>
                 <PrivateRoute path="/recipe" layout='App' exact={true}>
                     <Recipe.Management/>
                 </PrivateRoute>

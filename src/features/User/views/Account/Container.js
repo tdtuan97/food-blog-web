@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import President from './President';
-import {updateAuthUser} from "@features/Auth/redux/actions";
+import {getAuthUser, updateAuthUser} from "@features/Auth/redux/actions";
 
 class Container extends Component {
 
@@ -17,12 +17,20 @@ class Container extends Component {
             />
         )
     }
+
+    componentDidMount() {
+        this.props.getAuthUser()
+    }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
         updateAuthUser: (data) => {
             dispatch(updateAuthUser(data));
+        },
+
+        getAuthUser: () => {
+            dispatch(getAuthUser());
         },
     };
 }
