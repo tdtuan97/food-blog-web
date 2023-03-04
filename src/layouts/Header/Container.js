@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import President from './President';
 import {connect} from 'react-redux';
 import {clearToken, getAuthUser} from "@features/Auth/redux/actions";
-import {toggleSider} from "@features/Common/redux";
 
 class Container extends Component {
 
@@ -27,9 +26,6 @@ function mapDispatchToProps(dispatch) {
         },
         clearToken              : () => {
             dispatch(clearToken());
-        },
-        toggleSider             : () => {
-            dispatch(toggleSider());
         },
     };
 }

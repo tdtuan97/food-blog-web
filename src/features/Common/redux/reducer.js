@@ -14,11 +14,6 @@ export function reducer(state = initialState, action) {
                 ...state,
                 ...initialState
             }
-        case CONSTANTS.TOGGLE_SIDER_ACTION:
-            return {
-                ...state,
-                siderCollapsed: !state.siderCollapsed
-            };
         default:
             return state;
     }

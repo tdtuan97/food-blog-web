@@ -1,1 +1,0 @@
-export {default as RuleList} from './Component'
