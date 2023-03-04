@@ -6,30 +6,73 @@ import recipeImgDefault from "@images/recipe-default.jpg";
 import {Avatar, Col, Row} from "antd";
 import {ClockCircleOutlined, FieldTimeOutlined, UserOutlined} from "@ant-design/icons";
 import BadgeImageDefault from "@images/recipe-default.jpg";
-import {Input} from 'antd';
+import {Input, Popconfirm} from 'antd';
 
 const {TextArea} = Input;
 
 class President extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            open          : false,
+            confirmLoading: false,
+        }
+    }
+
+    showPopconfirm = () => {
+        this.setOpen(true);
+    };
+
+    setOpen = (value) => {
+        this.setState({
+            ...this.state,
+            open: value,
+        });
+    };
+
+    setConfirmLoading = (value) => {
+        this.setState({
+            ...this.state,
+            confirmLoading: value,
+        });
+    };
+
+    handleOk = (recipeId) => {
+        this.setConfirmLoading(true);
+        setTimeout(() => {
+            this.props.onDeleteComment(recipeId)
+            this.setOpen(false);
+            this.setConfirmLoading(false);
+        }, 500);
+    };
+
+    handleCancel = () => {
+        this.setOpen(false)
+    };
+
     render() {
         let {
+                submitLoading,
                 comments,
                 detail,
 
                 commentText,
                 onChangeComment,
                 onSubmitComment,
+
+                isEdit,
+                onUpdateComment,
             } = this.props
 
-        comments = comments ? comments.data : {};
-        let userComments = comments.comment ?? [];
-        let myComment = comments.myComment ?? {}
+        let isLoadingComments = comments.loading;
+        comments              = comments ? comments.data : {};
+        let userComments      = comments.comment ?? [];
+        let myComment         = comments.myComment ?? {}
+        let isEmptyComment    = isLoadingComments === false && userComments.length === 0;
 
-        console.log(userComments)
-        console.log(myComment)
-
-        let data    = detail.data ?? {}
-        let loading = detail.loading
+        let data          = detail.data ?? {}
+        let loading       = detail.loading
+        let isLockComment = !!myComment.recipeId && (isEdit === false)
 
         let {
                 recipe,
@@ -59,10 +102,10 @@ class President extends Component {
                     loading ? <Loading/> : null
                 }
                 {
-                    (loading === false && !recipe.recipeId) ? <DataEmpty title="Không tìm thấy công thức"/> : null
+                    (loading === false && !recipeId) ? <DataEmpty title="Không tìm thấy công thức"/> : null
                 }
                 {
-                    recipe.recipeId ?
+                    recipeId ?
                         <div className="recipe-detail-wrap">
                             <RecipeImageCover
                                 image={helpers.generateFullImage(image) ?? recipeImgDefault}
@@ -182,12 +225,15 @@ class President extends Component {
                                                 placeholder="Viết bình luận"
                                                 value={commentText}
                                                 onChange={onChangeComment}
+                                                disabled={isLockComment}
                                             />
                                         </div>
                                         <div className="comment-action">
                                             <AntButton
                                                 type="primary"
                                                 onClick={onSubmitComment}
+                                                disabled={isLockComment}
+                                                loading={submitLoading}
                                             >
                                                 Bình luận
                                             </AntButton>
@@ -198,9 +244,14 @@ class President extends Component {
                                     </div>
                                     <div className="user-comments">
                                         {
+                                            isEmptyComment ? <DataEmpty title={"Chưa có bình luận."}/> : null
+                                        }
+                                        {
                                             (userComments.length ?
                                                 userComments.map((item, i) => {
-                                                    let commentUser = item.User ?? {}
+                                                    let commentUser   = item.User ?? {}
+                                                    let commentUserId = item.userId ?? null
+                                                    let isOwner       = commentUserId === helpers.getAuthUserId()
                                                     return (
                                                         <div className="comment-item" key={i}>
                                                             <div className="left">
@@ -212,26 +263,51 @@ class President extends Component {
                                                             </div>
                                                             <div className="right">
                                                                 <div className="comment-auth">
-                                                                    <span className="label">{commentUser.fullName}</span>
+                                                                    <span
+                                                                        className="label">{commentUser.fullName}</span>
                                                                     <span className="comment-last-update">	• 1 giờ trước</span>
                                                                 </div>
                                                                 <div className="comment-text">
                                                                     {item.comment}
                                                                 </div>
-                                                                <div className="comment-self-action">
-                                                                    <AntButton
-                                                                        className="btn-action btn-update"
-                                                                        type="link"
-                                                                    >
-                                                                        Chỉnh sửa
-                                                                    </AntButton>
-                                                                    <AntButton
-                                                                        className="btn-action btn-delete"
-                                                                        type="link"
-                                                                    >
-                                                                        Xoá
-                                                                    </AntButton>
-                                                                </div>
+                                                                {
+                                                                    !isOwner ? null :
+                                                                        <div className="comment-self-action">
+                                                                            <AntButton
+                                                                                className="btn-action btn-update"
+                                                                                type="link"
+                                                                                onClick={() => {
+                                                                                    onUpdateComment(item.comment)
+                                                                                }}
+                                                                            >
+                                                                                Chỉnh sửa
+                                                                            </AntButton>
+
+                                                                            <Popconfirm
+                                                                                title="Xác nhận xoá ?"
+                                                                                open={this.state.open}
+                                                                                onConfirm={() => {
+                                                                                    this.handleOk(recipeId)
+                                                                                }}
+                                                                                okButtonProps={{
+                                                                                    loading: this.state.confirmLoading,
+                                                                                }}
+                                                                                onCancel={this.handleCancel}
+                                                                            >
+                                                                                <AntButton
+                                                                                    className="btn-action btn-delete"
+                                                                                    type="link"
+                                                                                    value={recipeId}
+                                                                                    onClick={this.showPopconfirm}
+                                                                                >
+                                                                                    Xoá
+                                                                                </AntButton>
+                                                                            </Popconfirm>
+
+
+                                                                        </div>
+
+                                                                }
                                                             </div>
                                                         </div>
                                                     )

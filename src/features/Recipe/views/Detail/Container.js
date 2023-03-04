@@ -1,7 +1,13 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import President from './President';
-import {getRecipe, getRecipeComments, postRecipeComment} from "@features/Recipe/redux/actions";
+import {
+    deleteRecipeComment,
+    getRecipe,
+    getRecipeComments,
+    postRecipeComment,
+    updateRecipeComment
+} from "@features/Recipe/redux/actions";
 import {withRouter} from "react-router-dom";
 import {reset} from "@common/crud";
 
@@ -10,7 +16,20 @@ class Container extends Component {
         super(props);
         this.state = {
             commentText: "",
+            isEdit     : false
         }
+    }
+
+    /**
+     * On change comment
+     * @param value
+     */
+    onUpdateComment = (value) => {
+        this.setState({
+            ...this.state,
+            commentText: value,
+            isEdit     : true,
+        })
     }
 
     /**
@@ -28,32 +47,53 @@ class Container extends Component {
      * Submit comment
      */
     onSubmitComment = () => {
-        let value = this.state.commentText
+        let value  = this.state.commentText
+        let isEdit = this.state.isEdit
         if (value && value !== "") {
             const {id} = this.props.match.params;
             this.setState({
                 ...this.state,
-                commentText: ""
+                commentText: "",
+                isEdit     : false,
             }, function () {
-                this.props.postRecipeComment(id, value)
+                if (isEdit) {
+                    this.props.updateRecipeComment(id, value)
+                } else {
+                    this.props.postRecipeComment(id, value)
+                }
             })
         }
+    }
+
+    /**
+     * Delete comment
+     */
+    onDeleteComment = (recipeId) => {
+        this.props.deleteRecipeComment(recipeId)
     }
 
     render() {
         const {
                   detail,
-                  comments
+                  comments,
+                  updateComment,
+                  postComment
               } = this.props.recipe
 
-        const {commentText} = this.state
+        const submitLoading = updateComment.loading || postComment.loading
+
+        const {commentText, isEdit} = this.state
         return (
             <President
+                submitLoading={submitLoading}
                 detail={detail}
                 comments={comments}
                 commentText={commentText}
                 onChangeComment={this.onChangeComment}
                 onSubmitComment={this.onSubmitComment}
+                isEdit={isEdit}
+                onUpdateComment={this.onUpdateComment}
+                onDeleteComment={this.onDeleteComment}
             />
         )
     }
@@ -65,11 +105,27 @@ class Container extends Component {
     }
 
     componentDidUpdate(prevProps) {
+        const {id}             = this.props.match.params;
         let currentPostComment = this.props.recipe.postComment
-        let prevPostComment = prevProps.recipe.postComment
+        let prevPostComment    = prevProps.recipe.postComment
 
-        //console.log(currentPostComment)
-        //console.log(prevPostComment)
+        let currentDeleteComment = this.props.recipe.deleteComment
+        let prevDeleteComment    = prevProps.recipe.deleteComment
+
+        let currentUpdateComment = this.props.recipe.updateComment
+        let prevUpdateComment    = prevProps.recipe.updateComment
+
+        if (currentDeleteComment.data !== prevDeleteComment.data) {
+            this.props.getRecipeComments(id)
+        }
+
+        if (currentPostComment.data.comment !== prevPostComment.data.comment) {
+            this.props.getRecipeComments(id)
+        }
+
+        if (currentUpdateComment.data.comment !== prevUpdateComment.data.comment) {
+            this.props.getRecipeComments(id)
+        }
     }
 
     componentWillUnmount() {
@@ -89,6 +145,14 @@ function mapDispatchToProps(dispatch) {
 
         postRecipeComment: (id, value) => {
             dispatch(postRecipeComment(id, value));
+        },
+
+        updateRecipeComment: (id, value) => {
+            dispatch(updateRecipeComment(id, value));
+        },
+
+        deleteRecipeComment: (id) => {
+            dispatch(deleteRecipeComment(id));
         },
 
         reset: () => {

@@ -1,6 +1,6 @@
 const initialState = {
     list: {
-        data   : {},
+        data   : [],
         loading: false,
     },
     add: {
@@ -25,6 +25,14 @@ const initialState = {
     },
     postComment: {
         data   : {},
+        loading: false,
+    },
+    updateComment: {
+        data   : {},
+        loading: false,
+    },
+    deleteComment: {
+        data   : false,
         loading: false,
     },
 };

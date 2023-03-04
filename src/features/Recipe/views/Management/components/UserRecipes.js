@@ -6,6 +6,7 @@ import {Col, Row} from 'antd';
 class UserRecipes extends Component {
     render() {
         const {title, listRecipe, loading} = this.props
+
         return (
             <div className="recipe-carousel">
                 <div className="title">

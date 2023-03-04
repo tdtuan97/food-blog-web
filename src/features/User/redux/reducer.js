@@ -1,5 +1,6 @@
 import initialState from "./initialState";
 import * as CONSTANTS from "./constants";
+import {RESET_ACTION} from "@features/Common/redux/constants";
 
 export function reducer(state = initialState, action) {
     let payload = action.payload;
@@ -7,100 +8,65 @@ export function reducer(state = initialState, action) {
         /**
          * Reset action
          */
+        case RESET_ACTION:
+            return {
+                ...state,
+                ...initialState
+            }
 
-        /**
-         * Reset action
-         */
-        case CONSTANTS.INGREDIENT:
+        case CONSTANTS.GET_USER: {
             return {
                 ...state,
-                ingredientList: {
-                    ...state.ingredientList,
+                user: {
+                    ...state.user,
                     loading: false,
-                    data   : payload.data ?? []
+                    data   : payload.data ?? {}
                 },
             }
-        case CONSTANTS.INGREDIENT_LOADING: {
+        }
+        case CONSTANTS.GET_USER_LOADING: {
             return {
                 ...state,
-                ingredientList: {
-                    ...state.ingredientList,
+                user: {
+                    ...state.user,
                     loading: true,
                 },
             }
         }
-        case CONSTANTS.RECIPE_ALL: {
+        case CONSTANTS.FOLLOW_USER: {
             return {
                 ...state,
-                recipeAll: {
-                    ...state.recipeAll,
+                follow: {
+                    ...state.follow,
                     loading: false,
-                    data   : payload.data ?? []
+                    data   : payload.data ?? {}
                 },
             }
         }
-        case CONSTANTS.RECIPE_ALL_LOADING: {
+        case CONSTANTS.FOLLOW_USER_LOADING: {
             return {
                 ...state,
-                recipeAll: {
-                    ...state.recipeAll,
+                follow: {
+                    ...state.follow,
                     loading: true,
                 },
             }
         }
-        case CONSTANTS.RECIPE_BY_FOLLOW_USER: {
+        case CONSTANTS.UNFOLLOW_USER: {
             return {
                 ...state,
-                recipeByFollowUser: {
-                    ...state.recipeByFollowUser,
+                unfollow: {
+                    ...state.unfollow,
                     loading: false,
-                    data   : payload.data ?? []
+                    data   : payload.data ?? {}
                 },
             }
         }
-        case CONSTANTS.RECIPE_BY_FOLLOW_USER_LOADING: {
+        case CONSTANTS.UNFOLLOW_USER_LOADING: {
             return {
                 ...state,
-                recipeByFollowUser: {
-                    ...state.recipeByFollowUser,
-                    loading: true,
-                },
-            }
-        }
-        case CONSTANTS.RECIPE_BY_POPULAR: {
-            return {
-                ...state,
-                recipeByPopular: {
-                    ...state.recipeByPopular,
-                    loading: false,
-                    data   : payload.data ?? []
-                },
-            }
-        }
-        case CONSTANTS.RECIPE_BY_POPULAR_LOADING: {
-            return {
-                ...state,
-                recipeByPopular: {
-                    ...state.recipeByPopular,
-                    loading: true,
-                },
-            }
-        }
-        case CONSTANTS.RECIPE_BY_INGREDIENT: {
-            return {
-                ...state,
-                recipeByIngredient: {
-                    ...state.recipeByIngredient,
-                    loading: false,
-                    data   : payload.data ?? []
-                },
-            }
-        }
-        case CONSTANTS.RECIPE_BY_INGREDIENT_LOADING: {
-            return {
-                ...state,
-                recipeByIngredient: {
-                    ...state.recipeByIngredient,
+                unfollow: {
+                    ...state.unfollow,
                     loading: true,
                 },
             }

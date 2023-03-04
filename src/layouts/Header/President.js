@@ -83,12 +83,6 @@ class President extends Component {
                                 <li className={pathName === "/recipe" ? classItemActive : classItem}>
                                     <Link to="/recipe">Management</Link>
                                 </li>
-                                <li className={pathName === "/contact" ? classItemActive : classItem}>
-                                    <Link to="/contact">Contact</Link>
-                                </li>
-                                <li className={pathName === "/about" ? classItemActive : classItem}>
-                                    <Link to="/about">About</Link>
-                                </li>
                             </ul>
                         </div>
                         <div className="header-menu auth-menu">
@@ -97,15 +91,15 @@ class President extends Component {
                                     (
                                         <Dropdown className="menu-content" overlay={
                                             <Menu>
+                                                <Menu.Item onClick={this.redirectToProfile}>
+                                                    Cá nhân
+                                                </Menu.Item>
                                                 <Menu.Item onClick={this.redirectToAccount}>
                                                     Tài khoản
                                                 </Menu.Item>
-                                                <Menu.Item onClick={this.redirectToProfile}>
-                                                    Thông tin cá nhân
-                                                </Menu.Item>
                                                 <Menu.Divider/>
                                                 <Menu.Item onClick={handleLogout}>
-                                                    Logout
+                                                    Đăng xuất
                                                 </Menu.Item>
                                             </Menu>
                                         }>

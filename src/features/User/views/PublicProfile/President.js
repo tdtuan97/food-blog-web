@@ -1,46 +1,25 @@
 import React, {Component} from 'react';
-import {RecipeCarousel} from "./components";
-import RecipeFilter from './components/RecipeFilter';
+import {ContentTab, UserLabel} from "@features/User/components";
 
 class President extends Component {
     render() {
         const {
-                  ingredientList,
-                  recipeAll,
+                  user,
+                  userRecipe,
                   recipeByFollowUser,
-                  recipeByPopular,
-                  recipeByIngredient,
-
-                  ingredientSelected,
-                  onSelectedIngredient
               } = this.props
 
-        let listRecipeByIngredient        = ingredientSelected ? recipeByIngredient.data : recipeAll.data
-        let listRecipeByIngredientLoading = ingredientSelected ? recipeByIngredient.loading : recipeAll.loading
-
+        let userData = user.user ?? {}
+        let countFollowed = user.countFollowed ?? 0
+        let countFollowing = user.countFollowing ?? 0
         return (
-            <div className="features feature-home">
-                <RecipeFilter
-                    title="Các nguyên liệu đang trong mùa"
-                    filterItems={ingredientList.data ?? []}
-                    loading={ingredientList.loading}
-                    ingredientSelected={ingredientSelected}
-                    onSelectedIngredient={onSelectedIngredient}
-                />
-
-                <RecipeCarousel
-                    listRecipe={listRecipeByIngredient}
-                    loading={listRecipeByIngredientLoading}
-                />
-                <RecipeCarousel
-                    title="Công thức mới từ người bạn theo dõi"
-                    listRecipe={recipeByFollowUser.data}
-                    loading={recipeByFollowUser.loading}
-                />
-                <RecipeCarousel
-                    title="Công thức phổ biến trong tuần"
-                    listRecipe={recipeByPopular.data}
-                    loading={recipeByPopular.loading}
+            <div className="features feature-self-profile">
+                <UserLabel user={userData}/>
+                <ContentTab
+                    userRecipe={userRecipe}
+                    recipeByFollowUser={recipeByFollowUser}
+                    countFollowed={countFollowed}
+                    countFollowing={countFollowing}
                 />
             </div>
         );

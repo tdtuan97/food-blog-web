@@ -12,13 +12,21 @@ class RecipeCard extends Component {
     /**
      * Redirect to detail page
      */
-    redirectToDetail=()=> {
-        this.props.history.push(`recipe/${this.props.recipe.recipeId}/detail`)
+    redirectToDetail = () => {
+        this.props.history.push(`/recipe/${this.props.recipe.recipeId}/detail`)
+    }
+
+    /**
+     * Redirect to profile page
+     */
+    redirectToProfile = (id) => {
+        this.props.history.push(`/user/${id}`)
     }
 
     render() {
         const recipe = this.props.recipe;
         const isLike = false;
+        let user     = recipe.User ?? {}
         return (
             <Card
                 className="card-recipe"
@@ -27,17 +35,19 @@ class RecipeCard extends Component {
                     <img
                         alt=""
                         src={helpers.generateFullImage(recipe.image) ?? recipeImgDefault}
+                        onClick={this.redirectToDetail}
                     />
                 }
-                onClick={this.redirectToDetail}
             >
                 <div className="mask-card">
-                    <div className="mark-title">
+                    <div className="mark-title" onClick={this.redirectToDetail}>
                         {recipe.recipeName}
                     </div>
                     <div className="mask-bottom">
-                        <div className="mask-left">
-                            {recipe.userName ?? "Trường Vũ"}
+                        <div className="mask-left" onClick={() => {
+                            this.redirectToProfile(user.userId)
+                        }}>
+                            {user.fullName ?? "Không xác định"}
                         </div>
                         <div className="mask-right">
                             {recipe.humanTime ?? "1 giờ trước"}

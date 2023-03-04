@@ -73,7 +73,7 @@ export function reducer(state = initialState, action) {
             let authUser    = action.payload ?? {}
             authUser        = authUser.data ?? {}
             let dateOfBirth = authUser.dateOfBirth !== 'Invalid date' ? moment(authUser.dateOfBirth) : moment();
-
+            saveUserId(authUser.userId ?? null)
             return {
                 ...state,
                 authUser: {
@@ -102,7 +102,6 @@ export function reducer(state = initialState, action) {
             if (updateAuthUser.success === true) {
                 updateAuthUser        = updateAuthUser.data ?? {}
                 let updateDateOfBirth = updateAuthUser.dateOfBirth !== 'Invalid date' ? moment(updateAuthUser.dateOfBirth) : moment();
-
                 return {
                     ...state,
                     authUser: {
@@ -152,6 +151,10 @@ export function reducer(state = initialState, action) {
                 ...stateLocal,
             };
     }
+}
+
+function saveUserId(userId){
+    localStorage.setItem('authUserId', userId)
 }
 
 function updateStateLocal(dataNew = {}) {

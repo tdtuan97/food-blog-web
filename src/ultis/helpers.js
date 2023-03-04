@@ -10,6 +10,11 @@ const helpers = {
         return string ? (process.env.REACT_APP_BASE_URL + string) : null;
     },
 
+    getAuthUserId: function (){
+        let userId = parseInt(localStorage.getItem('authUserId'));
+        return userId ? parseInt(userId) : null;
+    },
+
     formatCash: function (value, currency = 'VNĐ') {
         value = value.toString();
         return value.split('').reverse().reduce((prev, next, index) => {

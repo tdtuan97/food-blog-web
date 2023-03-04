@@ -1,26 +1,14 @@
 const initialState = {
-    ingredientList: {
-        data   : [],
+    user:{
+        data: {},
         loading: false,
     },
-
-    recipeAll: {
-        data   : [],
+    follow:{
+        data: {},
         loading: false,
     },
-
-    recipeByFollowUser: {
-        data   : [],
-        loading: false,
-    },
-
-    recipeByPopular: {
-        data   : [],
-        loading: false,
-    },
-
-    recipeByIngredient: {
-        data   : [],
+    unfollow:{
+        data: {},
         loading: false,
     }
 };

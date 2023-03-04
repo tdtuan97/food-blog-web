@@ -1,127 +1,77 @@
-import {apiGet} from "@common/crud";
+import {apiGet, apiPost} from "@common/crud";
 import * as CONSTANTS from "./constants";
+import {apiDelete} from "@common/crud/actions";
 
 /**
- * Get Ingredient By Season
+ * Get User
  * @returns
  */
-export function getIngredientBySeason() {
+export function getUser(id) {
     return dispatch => {
-        dispatch(getIngredientBySeasonLoadingAction())
-        dispatch(apiGet('ingredient/getIngredientBySeason', {}, {}, getIngredientBySeasonAction))
+        dispatch(getUserLoadingAction())
+        dispatch(apiGet(`user/getUser/${id}`, {}, {}, getUserAction))
     };
 }
 
-function getIngredientBySeasonAction(response) {
+function getUserAction(response) {
     return {
-        type   : CONSTANTS.INGREDIENT,
+        type   : CONSTANTS.GET_USER,
         payload: response
     };
 }
 
-function getIngredientBySeasonLoadingAction() {
+function getUserLoadingAction() {
     return {
-        type   : CONSTANTS.INGREDIENT_LOADING,
+        type   : CONSTANTS.GET_USER_LOADING,
         payload: null
     };
 }
 
 /**
- * Get recipe all
+ * Get User
  * @returns
  */
-export function getRecipeAll() {
+export function followUser(id) {
     return dispatch => {
-        dispatch(getRecipeAllLoadingAction())
-        dispatch(apiGet('recipe/getAllRecipe', {}, {}, getRecipeAllAction))
+        dispatch(followUserLoadingAction())
+        dispatch(apiPost(`follow/create/${id}`, {}, {}, followUserAction))
     };
 }
 
-function getRecipeAllAction(response) {
+function followUserAction(response) {
     return {
-        type   : CONSTANTS.RECIPE_ALL,
+        type   : CONSTANTS.FOLLOW_USER,
         payload: response
     };
 }
 
-function getRecipeAllLoadingAction() {
+function followUserLoadingAction() {
     return {
-        type   : CONSTANTS.RECIPE_ALL_LOADING,
+        type   : CONSTANTS.FOLLOW_USER_LOADING,
         payload: null
     };
 }
 
 /**
- * Get recipe by follow user
+ * Get User
  * @returns
  */
-export function getRecipeByFollowUser() {
+export function unfollowUser(id) {
     return dispatch => {
-        dispatch(getRecipeByFollowUserLoadingAction())
-        dispatch(apiGet('recipe/getAllRecipe', {}, {}, getRecipeByFollowUserAction))
+        dispatch(unfollowUserLoadingAction())
+        dispatch(apiDelete(`follow/delete/${id}`, {}, {}, unfollowUserAction))
     };
 }
-
-function getRecipeByFollowUserAction(response) {
+function unfollowUserAction(response) {
     return {
-        type   : CONSTANTS.RECIPE_BY_FOLLOW_USER,
+        type   : CONSTANTS.UNFOLLOW_USER,
         payload: response
     };
 }
 
-function getRecipeByFollowUserLoadingAction() {
+function unfollowUserLoadingAction() {
     return {
-        type   : CONSTANTS.RECIPE_BY_FOLLOW_USER_LOADING,
-        payload: null
-    };
-}
-
-/**
- * Get recipe by follow user
- * @returns
- */
-export function getRecipePopular() {
-    return dispatch => {
-        dispatch(getRecipePopularLoadingAction())
-        dispatch(apiGet('recipe/getPopularRecipe', {}, {}, getRecipePopularAction))
-    };
-}
-
-function getRecipePopularAction(response) {
-    return {
-        type   : CONSTANTS.RECIPE_BY_POPULAR,
-        payload: response
-    };
-}
-
-function getRecipePopularLoadingAction() {
-    return {
-        type   : CONSTANTS.RECIPE_BY_POPULAR_LOADING,
-        payload: null
-    };
-}
-
-/**
- * Get recipe by ingredient slug
- * @returns
- */
-export function getRecipeIngredient(ingredientSlug) {
-    return dispatch => {
-        dispatch(getRecipeIngredientLoadingAction())
-        dispatch(apiGet(`recipe/getRecipeByIngredient/${ingredientSlug}`, {}, {}, getRecipeIngredientAction))
-    };
-}
-
-function getRecipeIngredientAction(response) {
-    return {
-        type   : CONSTANTS.RECIPE_BY_INGREDIENT,
-        payload: response
-    };
-}
-
-function getRecipeIngredientLoadingAction() {
-    return {
-        type   : CONSTANTS.RECIPE_BY_INGREDIENT_LOADING,
+        type   : CONSTANTS.UNFOLLOW_USER_LOADING,
         payload: null
     };
 }

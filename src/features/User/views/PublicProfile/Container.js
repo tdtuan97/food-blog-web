@@ -2,101 +2,70 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import President from './President';
 import {
-    getIngredientBySeason,
-    getRecipeAll,
-    getRecipeByFollowUser, getRecipeIngredient,
-    getRecipePopular
+    getRecipeByFollowUser,
 } from "@features/Home/redux/actions";
+import {getRecipeManagement} from "@features/Recipe/redux/actions";
+import {withRouter} from "react-router-dom";
+import {reset} from "@common/crud";
+import {getUser} from "@features/User/redux/actions";
 
 class Container extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            ingredientSelected: null,
-        }
-    }
-
-    /**
-     * On select badge
-     * @param e
-     */
-    onSelectedIngredient = (e) => {
-        let id                   = e.currentTarget.dataset.id ?? null
-        id                       = id ? id : null
-        let {ingredientSelected} = this.state
-        ingredientSelected       = ingredientSelected !== id ? id : null
-        this.setState({
-            ...this.state,
-            ingredientSelected: ingredientSelected
-        })
-        if(ingredientSelected){
-            this.props.getRecipeIngredient(ingredientSelected)
-        }
-        else{
-            this.props.getRecipeAll();
-        }
-    }
-
     render() {
         const {
-                  ingredientList,
-                  recipeAll,
                   recipeByFollowUser,
-                  recipeByPopular,
-                  recipeByIngredient
-              } = this.props.home
-
-        const {ingredientSelected} = this.state
+              }          = this.props.home
+        const {
+                  list,
+              }          = this.props.recipe
+        let user = this.props.user.user.data ?? {}
         return (
             <President
-                ingredientList={ingredientList}
-                recipeAll={recipeAll}
+                userRecipe={list}
                 recipeByFollowUser={recipeByFollowUser}
-                recipeByPopular={recipeByPopular}
-                recipeByIngredient={recipeByIngredient}
-
-                ingredientSelected={ingredientSelected}
-                onSelectedIngredient={this.onSelectedIngredient}
+                user={user}
             />
         )
     }
 
     componentDidMount() {
-        this.props.getIngredientBySeason();
-        this.props.getRecipeAll();
+        const {id} = this.props.match.params;
         this.props.getRecipeByFollowUser();
-        this.props.getRecipePopular();
+        this.props.getRecipeManagement(id);
+        this.props.getUser(id);
+    }
+
+    componentWillUnmount() {
+        this.props.reset()
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        getIngredientBySeason: () => {
-            dispatch(getIngredientBySeason());
-        },
-
-        getRecipeAll: () => {
-            dispatch(getRecipeAll());
-        },
-
         getRecipeByFollowUser: () => {
             dispatch(getRecipeByFollowUser());
         },
 
-        getRecipePopular: () => {
-            dispatch(getRecipePopular());
+        getUser: (id) => {
+            dispatch(getUser(id));
         },
 
-        getRecipeIngredient: (ingredient) => {
-            dispatch(getRecipeIngredient(ingredient));
+        getRecipeManagement: (userId) => {
+            dispatch(getRecipeManagement(userId));
+        },
+
+        reset: () => {
+            dispatch(reset());
         },
     };
 }
 
 function mapStateToProps(state) {
     return {
-        home: state.home
+        home  : state.home,
+        auth  : state.auth,
+        user  : state.user,
+        recipe: state.recipe,
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Container)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Container))

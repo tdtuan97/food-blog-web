@@ -15,13 +15,13 @@ export function reducer(state = initialState, action) {
                 ...initialState
             }
         case CONSTANTS.RECIPE_MANAGEMENT:
-            data = payload.data ?? {}
+            data = payload.data ?? []
             return {
                 ...state,
                 list: {
                     ...state.list,
                     loading: false,
-                    data   : data ?? {}
+                    data   : data ?? []
                 },
             }
         case CONSTANTS.RECIPE_MANAGEMENT_LOADING: {
@@ -135,7 +135,11 @@ export function reducer(state = initialState, action) {
                 postComment: {
                     ...state.postComment,
                     loading: false,
-                    data   : data ?? []
+                    data   : data ?? {}
+                },
+                deleteComment: {
+                    ...state.deleteComment,
+                    data: false
                 },
             }
         case CONSTANTS.RECIPE_COMMENT_POST_LOADING: {
@@ -143,6 +147,47 @@ export function reducer(state = initialState, action) {
                 ...state,
                 postComment: {
                     ...state.postComment,
+                    loading: true,
+                },
+            }
+        }
+        case CONSTANTS.RECIPE_COMMENT_UPDATE:
+            data = payload.data ?? {}
+            return {
+                ...state,
+                updateComment: {
+                    ...state.updateComment,
+                    loading: false,
+                    data   : data ?? {}
+                },
+                deleteComment: {
+                    ...state.deleteComment,
+                    data: false
+                },
+            }
+        case CONSTANTS.RECIPE_COMMENT_UPDATE_LOADING: {
+            return {
+                ...state,
+                updateComment: {
+                    ...state.updateComment,
+                    loading: true,
+                },
+            }
+        }
+        case CONSTANTS.RECIPE_COMMENT_DELETE:
+            return {
+                ...state,
+                deleteComment: {
+                    ...state.deleteComment,
+                    loading: false,
+                    data   : payload.success === true
+                },
+            }
+        case CONSTANTS.RECIPE_COMMENT_DELETE_LOADING: {
+            return {
+                ...state,
+                deleteComment: {
+                    ...state.deleteComment,
                     loading: true,
                 },
             }

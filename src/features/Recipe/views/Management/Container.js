@@ -17,14 +17,17 @@ class Container extends Component {
     }
 
     componentDidMount() {
-        this.props.getRecipeManagement();
+        let userId = localStorage.getItem('authUserId') ?? null
+        if (userId){
+            this.props.getRecipeManagement(userId);
+        }
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        getRecipeManagement: () => {
-            dispatch(getRecipeManagement());
+        getRecipeManagement: (userId) => {
+            dispatch(getRecipeManagement(userId));
         },
     };
 }
