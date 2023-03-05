@@ -1,13 +1,9 @@
 {
   "files": {
-    "main.css": "/food-blog-web/static/css/main.67d47ab0.css",
-    "main.js": "/food-blog-web/static/js/main.2babad52.js",
+    "main.css": "/food-blog-web/static/css/main.a66441ee.css",
+    "main.js": "/food-blog-web/static/js/main.a1ba9267.js",
     "static/media/recipe-default.jpg": "/food-blog-web/static/media/recipe-default.de0262eee2a167c786ad.jpg",
     "static/media/user.png": "/food-blog-web/static/media/user.1f2b6f5fb110d0f613f6.png",
-    "static/media/MediumItalic.ttf": "/food-blog-web/static/media/MediumItalic.82736aaa11c64709055f.ttf",
-    "static/media/BoldItalic.ttf": "/food-blog-web/static/media/BoldItalic.87d61cea6fe1d235d4a8.ttf",
-    "static/media/Medium.ttf": "/food-blog-web/static/media/Medium.7c8d04cd831df3033c8a.ttf",
-    "static/media/Bold.ttf": "/food-blog-web/static/media/Bold.f80816a5455d171f948d.ttf",
     "static/media/OpenSans-MediumItalic.ttf": "/food-blog-web/static/media/OpenSans-MediumItalic.00b0286ec1643a480c09.ttf",
     "static/media/OpenSans-BoldItalic.ttf": "/food-blog-web/static/media/OpenSans-BoldItalic.de2cc75522f7b31c7536.ttf",
     "static/media/OpenSans-Medium.ttf": "/food-blog-web/static/media/OpenSans-Medium.65529e6c75fe516f596a.ttf",
@@ -15,11 +11,15 @@
     "static/media/logo.png": "/food-blog-web/static/media/logo.0fffdae2376720a92251.png",
     "static/media/background.svg": "/food-blog-web/static/media/background.d6c29e26d397a0423c47128db609f747.svg",
     "index.html": "/food-blog-web/index.html",
-    "main.67d47ab0.css.map": "/food-blog-web/static/css/main.67d47ab0.css.map",
-    "main.2babad52.js.map": "/food-blog-web/static/js/main.2babad52.js.map"
+    "static/media/Bold.ttf": "/food-blog-web/static/media/Bold.31d6cfe0d16ae931b73c.ttf",
+    "static/media/BoldItalic.ttf": "/food-blog-web/static/media/BoldItalic.31d6cfe0d16ae931b73c.ttf",
+    "static/media/Medium.ttf": "/food-blog-web/static/media/Medium.31d6cfe0d16ae931b73c.ttf",
+    "static/media/MediumItalic.ttf": "/food-blog-web/static/media/MediumItalic.31d6cfe0d16ae931b73c.ttf",
+    "main.a66441ee.css.map": "/food-blog-web/static/css/main.a66441ee.css.map",
+    "main.a1ba9267.js.map": "/food-blog-web/static/js/main.a1ba9267.js.map"
   },
   "entrypoints": [
-    "static/css/main.67d47ab0.css",
-    "static/js/main.2babad52.js"
+    "static/css/main.a66441ee.css",
+    "static/js/main.a1ba9267.js"
   ]
 }
