@@ -1,59 +1,38 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import President from './President';
-import {getRecipe, getRecipeComments, postRecipeComment} from "@features/Recipe/redux/actions";
+import {
+    getRecipe,
+    getRecipeComments,
+    postRecipe,
+    postRecipeComment,
+    updateRecipe
+} from "@features/Recipe/redux/actions";
 import {withRouter} from "react-router-dom";
 import {getIngredientBySeason} from "@features/Home/redux/actions";
+import {reset} from "@common/crud";
 
 class Container extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            commentText: "",
-        }
-    }
-
-    /**
-     * On change comment
-     * @param value
-     */
-    onChangeComment = (value) => {
-        this.setState({
-            ...this.state,
-            commentText: value.currentTarget.value
-        })
-    }
-
-    /**
-     * Submit comment
-     */
-    onSubmitComment = () => {
-        let value = this.state.commentText
-        if (value && value !== "") {
-            const {id} = this.props.match.params;
-            this.setState({
-                ...this.state,
-                commentText: ""
-            }, function () {
-                this.props.postRecipeComment(id, value)
-            })
-        }
+    onClickUpdate = (data) => {
+        const {id} = this.props.match.params;
+        this.props.updateRecipe(id, data)
     }
 
     render() {
         const {
-                  detail,
-                  comments
+                  update
               } = this.props.recipe
 
         return (
             <President
-                detail={detail}
-
-                onChangeComment={this.onChangeComment}
-                onSubmitComment={this.onSubmitComment}
+                update={update}
+                onClickUpdate={this.onClickUpdate}
             />
         )
+    }
+
+    componentWillUnmount() {
+        this.props.reset()
     }
 
     componentDidMount() {
@@ -77,16 +56,16 @@ function mapDispatchToProps(dispatch) {
             dispatch(getRecipe(id));
         },
 
-        getRecipeComments: (id) => {
-            dispatch(getRecipeComments(id));
-        },
-
-        postRecipeComment: (id, value) => {
-            dispatch(postRecipeComment(id, value));
-        },
-
         getIngredientBySeason: () => {
             dispatch(getIngredientBySeason());
+        },
+
+        reset: () => {
+            dispatch(reset());
+        },
+
+        updateRecipe: (id, data) => {
+            dispatch(updateRecipe(id, data));
         },
     };
 }

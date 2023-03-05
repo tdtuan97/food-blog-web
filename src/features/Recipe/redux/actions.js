@@ -53,6 +53,97 @@ function getRecipeLoadingAction() {
 }
 
 /**
+ * Add recipe by id
+ * @returns
+ */
+export function postRecipe(data) {
+    return dispatch => {
+        dispatch(postRecipeLoadingAction())
+        dispatch(apiPost(`recipe/createRecipe`, {
+            name       : data.name ?? "",
+            amount     : data.amount ?? "",
+            status     : data.status ?? "",
+            prepareTime: data.prepareTime ?? "",
+            cookTime   : data.cookTime ?? "",
+            ingredient : data.ingredient ?? [],
+            step       : data.step ?? [],
+        }, {}, postRecipeAction))
+    };
+}
+
+function postRecipeAction(response) {
+    return {
+        type   : CONSTANTS.RECIPE_ADD,
+        payload: response
+    };
+}
+
+function postRecipeLoadingAction() {
+    return {
+        type   : CONSTANTS.RECIPE_ADD_LOADING,
+        payload: null
+    };
+}
+
+/**
+ * Update recipe by id
+ * @returns
+ */
+export function updateRecipe(id, data) {
+    return dispatch => {
+        dispatch(updateRecipeLoadingAction())
+        dispatch(apiPut(`recipe/updateRecipe/${id}`, {
+            name       : data.name ?? "",
+            amount     : data.amount ?? "",
+            status     : data.status ?? "",
+            prepareTime: data.prepareTime ?? "",
+            cookTime   : data.cookTime ?? "",
+            ingredient : data.ingredient ?? [],
+            step       : data.step ?? [],
+        }, {}, updateRecipeAction))
+    };
+}
+
+function updateRecipeAction(response) {
+    return {
+        type   : CONSTANTS.RECIPE_UPDATE,
+        payload: response
+    };
+}
+
+function updateRecipeLoadingAction() {
+    return {
+        type   : CONSTANTS.RECIPE_UPDATE_LOADING,
+        payload: null
+    };
+}
+
+/**
+ * delete recipe by id
+ * @returns
+ */
+export function deleteRecipe(id) {
+    return dispatch => {
+        dispatch(deleteRecipeLoadingAction())
+        dispatch(apiPut(`recipe/deleteRecipe/${id}`, {}, {}, deleteRecipeAction))
+    };
+}
+
+function deleteRecipeAction(response) {
+    return {
+        type   : CONSTANTS.RECIPE_DELETE,
+        payload: response
+    };
+}
+
+function deleteRecipeLoadingAction() {
+    return {
+        type   : CONSTANTS.RECIPE_DELETE_LOADING,
+        payload: null
+    };
+}
+
+/**
  * Get recipe by id
  * @returns
  */

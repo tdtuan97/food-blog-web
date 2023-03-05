@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {RecipeItem} from "./";
-import {DataEmpty, Loading} from "@layouts";
+import {AntButton, DataEmpty, Loading} from "@layouts";
 import {Col, Row} from 'antd';
+import {Link} from "react-router-dom";
 
 class UserRecipes extends Component {
     render() {
@@ -11,6 +12,13 @@ class UserRecipes extends Component {
             <div className="recipe-carousel">
                 <div className="title">
                     {title}
+                </div>
+                <div className="btn-add">
+                    <Link to={"/recipe/add"}>
+                        <AntButton type="dashed">
+                            Thêm công thức mới
+                        </AntButton>
+                    </Link>
                 </div>
                 <div className="recipe-list">
                     <Row gutter={12}>
