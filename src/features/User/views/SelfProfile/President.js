@@ -5,7 +5,7 @@ class President extends Component {
     render() {
         const {
                   user,
-                  userRecipe,
+                  listRecipe,
                   recipeByFollowUser,
               } = this.props
 
@@ -16,7 +16,7 @@ class President extends Component {
             <div className="features feature-self-profile">
                 <UserLabel user={userData}/>
                 <ContentTab
-                    userRecipe={userRecipe}
+                    listRecipe={listRecipe}
                     recipeByFollowUser={recipeByFollowUser}
                     countFollowed={countFollowed}
                     countFollowing={countFollowing}

@@ -8,6 +8,9 @@ import {getRecipeManagement} from "@features/Recipe/redux/actions";
 import {getUser} from "@features/User/redux/actions";
 import {reset} from "@common/crud";
 import helpers from "@ultis/helpers";
+import {AntButton} from "@layouts";
+import {Link} from "react-router-dom";
+import {getListRecipeManagement} from "@features/ListRecipe/redux/actions";
 
 class Container extends Component {
     render() {
@@ -16,12 +19,12 @@ class Container extends Component {
               }  = this.props.home
         const {
                   list,
-              }  = this.props.recipe
+              }  = this.props.listRecipe
         let user = this.props.user.user.data ?? {}
 
         return (
             <President
-                userRecipe={list}
+                listRecipe={list}
                 recipeByFollowUser={recipeByFollowUser}
                 user={user}
             />
@@ -31,12 +34,12 @@ class Container extends Component {
     componentDidMount() {
         const id = helpers.getAuthUserId();
         this.props.getRecipeByFollowUser();
-        this.props.getRecipeManagement(id);
+        this.props.getListRecipeManagement(id);
         this.props.getUser(id);
     }
 
     componentWillUnmount() {
-        this.props.reset()
+        //this.props.reset()
     }
 }
 
@@ -50,8 +53,8 @@ function mapDispatchToProps(dispatch) {
             dispatch(getUser(id));
         },
 
-        getRecipeManagement: (userId) => {
-            dispatch(getRecipeManagement(userId));
+        getListRecipeManagement: (userId) => {
+            dispatch(getListRecipeManagement(userId));
         },
 
         reset: () => {
@@ -64,7 +67,7 @@ function mapStateToProps(state) {
     return {
         home  : state.home,
         auth  : state.auth,
-        recipe: state.recipe,
+        listRecipe: state.listRecipe,
         user  : state.user,
     }
 }

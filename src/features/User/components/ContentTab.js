@@ -2,11 +2,12 @@ import React, {Component} from 'react';
 import {Tabs} from "antd";
 import {withRouter} from "react-router-dom";
 import {RecipeCarousel} from "@features/Home/views/HomePage/components";
+import {ListRecipeCarousel} from "./";
 
 class UserLabel extends Component {
     render() {
         const {
-                  userRecipe,
+                  listRecipe,
                   recipeByFollowUser,
                   countFollowed,
                   countFollowing,
@@ -14,22 +15,22 @@ class UserLabel extends Component {
         return (
             <div className="content-block">
                 <Tabs defaultActiveKey="1"
-                      items={this.items(userRecipe, recipeByFollowUser, countFollowed, countFollowing)}
+                      items={this.items(listRecipe, recipeByFollowUser, countFollowed, countFollowing)}
                       onChange={this.onChange}
                 />
             </div>
         )
     }
 
-    items = (userRecipe, recipeByFollowUser, countFollowed, countFollowing) => {
+    items = (listRecipe, recipeByFollowUser, countFollowed, countFollowing) => {
         return [
             {
                 key     : '1',
                 label   : 'Thư viện',
-                children: <RecipeCarousel
-                    title="Công thức của bạn"
-                    listRecipe={userRecipe.data}
-                    loading={userRecipe.loading}
+                children: <ListRecipeCarousel
+                    title="Danh sách công thức"
+                    listRecipe={listRecipe.data}
+                    loading={listRecipe.loading}
                 />,
             },
             {
