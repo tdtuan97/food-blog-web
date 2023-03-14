@@ -125,3 +125,30 @@ function getRecipeIngredientLoadingAction() {
         payload: null
     };
 }
+
+/**
+ * Search recipe
+ * @returns
+ */
+ export function getRecipeByKeyword(keyword) {
+    return dispatch => {
+        dispatch(getRecipeByKeywordLoadingAction())
+        dispatch(apiGet(`recipe/search/`, {
+            q: keyword
+        }, {}, getRecipeByKeywordAction))
+    };
+}
+
+function getRecipeByKeywordAction(response) {
+    return {
+        type   : CONSTANTS.SEARCH_REICPE,
+        payload: response
+    };
+}
+
+function getRecipeByKeywordLoadingAction() {
+    return {
+        type   : CONSTANTS.SEARCH_REICPE_LOADING,
+        payload: null
+    };
+}

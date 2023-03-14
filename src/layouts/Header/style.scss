@@ -78,6 +78,11 @@ $colorHeader: #1d3a48d1;
                 max-width: 696px;
                 input{
                     color: white;
+                    height: 48px;
+                }
+
+                .ant-input-group-addon{
+                    display: none;
                 }
             }
 

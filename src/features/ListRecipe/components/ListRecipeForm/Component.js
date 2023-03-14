@@ -1,6 +1,7 @@
-import React, {Component} from 'react';
-import {connect} from "react-redux";
-import {Divider, Form} from "antd";
+import React, { Component } from 'react';
+import { connect } from "react-redux";
+import { Divider, Form, Popconfirm } from "antd";
+import { Link } from "react-router-dom";
 import {
     AntButton,
     AntFormItem,
@@ -12,25 +13,59 @@ class CustomComponent extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            open: false,
+            confirmLoading: false,
+        }
     }
+
+    showPopconfirm = () => {
+        this.setOpen(true);
+    };
+
+    setOpen = (value) => {
+        this.setState({
+            ...this.state,
+            open: value,
+        });
+    };
+
+    setConfirmLoading = (value) => {
+        this.setState({
+            ...this.state,
+            confirmLoading: value,
+        });
+    };
+
+    handleOkDelete = (id) => {
+        this.setConfirmLoading(true);
+        setTimeout(() => {
+            this.props.onDelete(id)
+            this.setOpen(false);
+            this.setConfirmLoading(false);
+        }, 500);
+    };
+
+    handleCancelDelete = () => {
+        this.setOpen(false)
+    };
 
     onSubmit = (data) => {
         this.props.onSubmit({
-            id  : data.id ?? null,
+            id: data.id ?? null,
             name: data.name ?? null,
         })
     }
 
     componentDidUpdate(prevProps) {
-        let prevDetail          = prevProps.listRecipe.detail;
-        let currentDetail       = this.props.listRecipe.detail;
-        let prevDetailRecipe    = prevDetail.data.listRecipe ?? {}
+        let prevDetail = prevProps.listRecipe.detail;
+        let currentDetail = this.props.listRecipe.detail;
+        let prevDetailRecipe = prevDetail.data.listRecipe ?? {}
         let currentDetailRecipe = currentDetail.data.listRecipe ?? {}
 
         if (prevDetailRecipe.recipeId !== currentDetailRecipe.recipeId) {
             let formData = {
-                id  : currentDetailRecipe.recipeId ?? null,
+                id: currentDetailRecipe.recipeId ?? null,
                 name: currentDetailRecipe.recipeName ?? "",
             }
 
@@ -72,19 +107,10 @@ class CustomComponent extends Component {
 
     render() {
         let {
-                formData,
-                listRecipe,
-            } = this.props
-
-        const {
-                  ingredientList,
-              } = this.props.home
-
-        const {selectedFileList, previewVisible, previewImage, previewTitle} = this.state
-
-        let {add, detail, update} = listRecipe;
-        let dataDetail            = detail.data ?? {};
-        const isDetail            = !!dataDetail.id
+            id,
+        } = this.props
+        
+        const { selectedFileList, previewVisible, previewImage, previewTitle } = this.state
 
         // Response data
         const updateLoading = false;
@@ -94,29 +120,29 @@ class CustomComponent extends Component {
             <Form
                 className="form-center form-custom recipe-form"
                 onFinish={(data => this.onSubmit(data))}
-                labelCol={{span: 4}}
-                wrapperCol={{span: 20}}
+                labelCol={{ span: 4 }}
+                wrapperCol={{ span: 20 }}
                 ref={this.formRef}
                 initialValues={initValues}
-                style={{padding: 24}}
+                style={{ padding: 24 }}
             >
                 <AntFormItem
                     hidden={true}
                     name="id"
                 >
-                    <AntInput/>
+                    <AntInput />
                 </AntFormItem>
                 <AntFormItem
                     required={true}
                     label="Tên danh sách"
                     name="name"
                 >
-                    <AntInput disabled={isDetail} placeholder="Nhập tên danh sách"/>
+                    <AntInput placeholder="Nhập tên danh sách" />
                 </AntFormItem>
-                <Divider style={{marginBlock: 24}}/>
+                <Divider style={{ marginBlock: 24 }} />
                 <div className="text-center group-button">
                     {
-                        dataDetail.id ?
+                        id ?
                             <AntButton
                                 className="btn-primary"
                                 htmlType="submit"
@@ -132,11 +158,34 @@ class CustomComponent extends Component {
                                 Save
                             </AntButton>
                     }
-                    <AntButton
-                        onClick={this.onCloseRule}
-                    >
-                        Cancel
-                    </AntButton>
+                    {
+                        id ?
+                            <Popconfirm
+                                title="Xác nhận xoá ?"
+                                open={this.state.open}
+                                onConfirm={() => {
+                                    this.handleOkDelete(id)
+                                }}
+                                okButtonProps={{
+                                    loading: this.state.confirmLoading,
+                                }}
+                                onCancel={this.handleCancelDelete}
+                            >
+                                <AntButton
+                                    type="danger"
+                                    value={id}
+                                    onClick={this.showPopconfirm}
+                                >
+                                    Xoá
+                                </AntButton>
+                            </Popconfirm>
+                            : null
+                    }
+                    <Link to={'/profile'}>
+                        <AntButton>
+                            Quay lại
+                        </AntButton>
+                    </Link>
                 </div>
             </Form>
         )
@@ -153,13 +202,13 @@ class CustomComponent extends Component {
 function mapStateToProps(state) {
     return {
         listRecipe: state.listRecipe,
-        home      : state.home,
+        home: state.home,
     }
 }
 
 export default connect(mapStateToProps, {})(CustomComponent)
 
 const initValues = {
-    id  : null,
+    id: null,
     name: "",
 }

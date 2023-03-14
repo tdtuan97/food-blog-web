@@ -105,6 +105,26 @@ export function reducer(state = initialState, action) {
                 },
             }
         }
+        case CONSTANTS.SEARCH_REICPE: {
+            console.log(payload.data)
+            return {
+                ...state,
+                recipeByIngredient: {
+                    ...state.recipeByIngredient,
+                    loading: false,
+                    //data   : payload.data ?? []
+                },
+            }
+        }
+        case CONSTANTS.SEARCH_REICPE_LOADING: {
+            return {
+                ...state,
+                recipeByIngredient: {
+                    ...state.recipeByIngredient,
+                    loading: true,
+                },
+            }
+        }
         default:
             return state;
     }

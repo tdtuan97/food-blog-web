@@ -58,6 +58,9 @@ export function reducer(state = initialState, action) {
         }
         case CONSTANTS.LIST_RECIPE_DELETE:
             data = payload.data ?? {}
+            if (payload.success){
+                pushMessageSuccess('Xóa danh sách thành công.')
+            }
             return {
                 ...state,
                 delete: {
@@ -96,6 +99,9 @@ export function reducer(state = initialState, action) {
         }
         case CONSTANTS.LIST_RECIPE_UPDATE:
             data = payload.data ?? {}
+            if (payload.success){
+                pushMessageSuccess('Cập nhật danh sách thành công.')
+            }
             return {
                 ...state,
                 update: {

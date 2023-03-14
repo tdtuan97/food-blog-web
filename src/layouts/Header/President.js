@@ -22,6 +22,7 @@ class President extends Component {
                   common,
                   handleToggleSider,
                   handleLogout,
+                  onSearch
               }              = this.props
         const siderCollapsed = common.siderCollapsed
         const classBtnToggle = siderCollapsed ? 'action-control close' : 'action-control'
@@ -59,10 +60,11 @@ class President extends Component {
                             </Link>
                         </div>
                         <div className="search-input">
-                            <Input
+                            <Input.Search
                                 placeholder="Gõ nguyên liệu để tìm kiếm"
                                 bordered={false}
-                                //onSearch={onSearch}
+                                onSearch={onSearch}
+                                enterButton={false}
                             />
                         </div>
                         {/*<div className="status-control">
