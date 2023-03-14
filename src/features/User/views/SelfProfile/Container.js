@@ -4,12 +4,9 @@ import President from './President';
 import {
     getRecipeByFollowUser,
 } from "@features/Home/redux/actions";
-import {getRecipeManagement} from "@features/Recipe/redux/actions";
 import {getUser} from "@features/User/redux/actions";
 import {reset} from "@common/crud";
 import helpers from "@ultis/helpers";
-import {AntButton} from "@layouts";
-import {Link} from "react-router-dom";
 import {getListRecipeManagement} from "@features/ListRecipe/redux/actions";
 
 class Container extends Component {

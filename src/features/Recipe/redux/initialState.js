@@ -35,6 +35,15 @@ const initialState = {
         data   : false,
         loading: false,
     },
+
+    likeRecipe: {
+        data   : {},
+        loading: false,
+    },
+    unlikeRecipe: {
+        data   : false,
+        loading: false,
+    },
 };
 
 export default initialState;

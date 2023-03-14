@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import President from './President';
 import {
     getIngredientBySeason,
@@ -21,32 +21,61 @@ class Container extends Component {
      * @param e
      */
     onSelectedIngredient = (e) => {
-        let id                   = e.currentTarget.dataset.id ?? null
-        id                       = id ? id : null
-        let {ingredientSelected} = this.state
-        ingredientSelected       = ingredientSelected !== id ? id : null
+        let id = e.currentTarget.dataset.id ?? null
+        id = id ? id : null
+        let { ingredientSelected } = this.state
+        ingredientSelected = ingredientSelected !== id ? id : null
         this.setState({
             ...this.state,
             ingredientSelected: ingredientSelected
         })
-        if(ingredientSelected){
+        if (ingredientSelected) {
             this.props.getRecipeIngredient(ingredientSelected)
         }
-        else{
+        else {
             this.props.getRecipeAll();
         }
     }
 
+    /**
+     * Refresh list recipe by ingredient
+     */
+    refreshListRecipeByIngredient = () => {
+        let { ingredientSelected } = this.state
+        if (ingredientSelected) {
+            this.props.getRecipeIngredient(ingredientSelected)
+        }
+        else {
+            this.props.getRecipeAll();
+        }
+    }
+
+    /**
+     * Refresh list recipe by ingredient
+     */
+     callBackRefreshRecipe = () => {
+        let { ingredientSelected } = this.state
+        if (ingredientSelected) {
+            this.props.getRecipeIngredient(ingredientSelected)
+        }
+        else {
+            this.props.getRecipeAll();
+        }
+
+        this.props.getRecipeByFollowUser();
+        this.props.getRecipePopular();
+    }
+
     render() {
         const {
-                  ingredientList,
-                  recipeAll,
-                  recipeByFollowUser,
-                  recipeByPopular,
-                  recipeByIngredient
-              } = this.props.home
+            ingredientList,
+            recipeAll,
+            recipeByFollowUser,
+            recipeByPopular,
+            recipeByIngredient
+        } = this.props.home
 
-        const {ingredientSelected} = this.state
+        const { ingredientSelected } = this.state
         return (
             <President
                 ingredientList={ingredientList}
@@ -57,6 +86,8 @@ class Container extends Component {
 
                 ingredientSelected={ingredientSelected}
                 onSelectedIngredient={this.onSelectedIngredient}
+
+                callBackRefreshRecipe={this.callBackRefreshRecipe}
             />
         )
     }

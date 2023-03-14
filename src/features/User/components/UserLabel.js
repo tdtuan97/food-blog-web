@@ -1,13 +1,20 @@
-import React, {Component} from 'react';
-import {Avatar} from "antd";
+import React, { Component } from 'react';
+import { Avatar } from "antd";
 import helpers from "@ultis/helpers";
-import {Link, withRouter} from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import BadgeImageDefault from "@images/recipe-default.jpg";
-import {UserOutlined} from "@ant-design/icons";
+import { UserOutlined } from "@ant-design/icons";
+import { AntButton } from '@src/layouts';
 
 class UserLabel extends Component {
     render() {
         const user = this.props.user;
+        const {
+            onClickFollow,
+            onClickUnfollow,
+            isFollow
+        } = this.props
+
         return (
             <div className="user-block">
                 <div className="label-user">
@@ -19,15 +26,31 @@ class UserLabel extends Component {
                                         size={80}
                                         src={<img
                                             src={helpers.generateFullImage(user.avatar)}
-                                            alt=""/>}
+                                            alt="" />}
                                     /> : <Avatar
                                         size={80}
-                                        icon={<UserOutlined/>}
+                                        icon={<UserOutlined />}
                                     />
                             }
                         </div>
                         <div className="right">
-                            <Link to={`/user/${user.userId}`} className="label">{user.fullName}</Link>
+                            <div>
+                                <Link to={`/user/${user.userId}`} className="label">{user.fullName}</Link>
+                                {
+                                    isFollow ?
+                                        <AntButton
+                                            onClick={onClickUnfollow}
+                                        >
+                                            Bỏ theo dõi
+                                        </AntButton>
+                                        : <AntButton
+                                            onClick={onClickFollow}
+                                        >
+                                            Theo dõi
+                                        </AntButton>
+                                }
+
+                            </div>
                             <div className="email">{user.email}</div>
                             {
                                 user.introduce ? <div className="introduce">

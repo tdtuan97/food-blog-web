@@ -1,6 +1,7 @@
 import initialState from "./initialState";
 import * as CONSTANTS from "./constants";
 import {RESET_ACTION} from "@features/Common/redux/constants";
+import { pushMessageSuccess } from "@src/layouts";
 
 export function reducer(state = initialState, action) {
     let payload = action.payload;
@@ -188,6 +189,58 @@ export function reducer(state = initialState, action) {
                 ...state,
                 deleteComment: {
                     ...state.deleteComment,
+                    loading: true,
+                },
+            }
+        }
+
+        case CONSTANTS.RECIPE_LIKE:
+            data = payload.data ?? {}
+            if (payload.success){
+                pushMessageSuccess('Bạn đã thích công thức này.')
+            }
+            return {
+                ...state,
+                likeRecipe: {
+                    ...state.likeRecipe,
+                    loading: false,
+                    data   : data ?? {}
+                },
+                unlikeRecipe: {
+                    ...state.unlikeRecipe,
+                    data: {}
+                },
+            }
+        case CONSTANTS.RECIPE_LIKE_LOADING: {
+            return {
+                ...state,
+                likeRecipe: {
+                    ...state.likeRecipe,
+                    loading: true,
+                },
+            }
+        }
+        case CONSTANTS.RECIPE_UNLIKE:
+            if (payload.success){
+                pushMessageSuccess('Bạn đã bỏ thích công thức này.')
+            }
+            return {
+                ...state,
+                unlikeRecipe: {
+                    ...state.unlikeRecipe,
+                    loading: false,
+                    data   : payload.success === true
+                },
+                likeRecipe: {
+                    ...state.likeRecipe,
+                    data   : {}
+                },
+            }
+        case CONSTANTS.RECIPE_UNLIKE_LOADING: {
+            return {
+                ...state,
+                unlikeRecipe: {
+                    ...state.unlikeRecipe,
                     loading: true,
                 },
             }

@@ -246,3 +246,53 @@ function deleteRecipeCommentLoadingAction() {
         payload: null
     };
 }
+
+/**
+ * Like recipe by id
+ * @returns
+ */
+ export function postLikeRecipe(recipeId) {
+    return dispatch => {
+        dispatch(postLikeRecipeLoadingAction())
+        dispatch(apiPost(`favorite/create/${recipeId}`, {}, {}, postLikeRecipeAction))
+    };
+}
+
+function postLikeRecipeAction(response) {
+    return {
+        type   : CONSTANTS.RECIPE_LIKE,
+        payload: response
+    };
+}
+
+function postLikeRecipeLoadingAction() {
+    return {
+        type   : CONSTANTS.RECIPE_LIKE_LOADING,
+        payload: null
+    };
+}
+
+/**
+ * Unlike recipe by id
+ * @returns
+ */
+ export function postUnlikeRecipe(recipeId) {
+    return dispatch => {
+        dispatch(postUnlikeRecipeLoadingAction())
+        dispatch(apiDelete(`favorite/delete/${recipeId}`, {}, postUnlikeRecipeAction))
+    };
+}
+
+function postUnlikeRecipeAction(response) {
+    return {
+        type   : CONSTANTS.RECIPE_UNLIKE,
+        payload: response
+    };
+}
+
+function postUnlikeRecipeLoadingAction() {
+    return {
+        type   : CONSTANTS.RECIPE_UNLIKE_LOADING,
+        payload: null
+    };
+}

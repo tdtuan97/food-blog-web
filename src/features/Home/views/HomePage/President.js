@@ -1,23 +1,23 @@
-import React, {Component} from 'react';
-import {RecipeCarousel} from "./components";
+import React, { Component } from 'react';
+import { RecipeCarousel } from "./components";
 import RecipeFilter from './components/RecipeFilter';
-import {AntButton} from "@layouts";
-import {Link} from "react-router-dom";
 
 class President extends Component {
     render() {
         const {
-                  ingredientList,
-                  recipeAll,
-                  recipeByFollowUser,
-                  recipeByPopular,
-                  recipeByIngredient,
+            ingredientList,
+            recipeAll,
+            recipeByFollowUser,
+            recipeByPopular,
+            recipeByIngredient,
 
-                  ingredientSelected,
-                  onSelectedIngredient
-              } = this.props
+            ingredientSelected,
+            onSelectedIngredient,
 
-        let listRecipeByIngredient        = ingredientSelected ? recipeByIngredient.data : recipeAll.data
+            callBackRefreshRecipe,
+        } = this.props
+
+        let listRecipeByIngredient = ingredientSelected ? recipeByIngredient.data : recipeAll.data
         let listRecipeByIngredientLoading = ingredientSelected ? recipeByIngredient.loading : recipeAll.loading
 
         return (
@@ -33,16 +33,19 @@ class President extends Component {
                 <RecipeCarousel
                     listRecipe={listRecipeByIngredient}
                     loading={listRecipeByIngredientLoading}
+                    callBackRefresh={callBackRefreshRecipe}
                 />
                 <RecipeCarousel
                     title="Công thức mới từ người bạn theo dõi"
                     listRecipe={recipeByFollowUser.data}
                     loading={recipeByFollowUser.loading}
+                    callBackRefresh={callBackRefreshRecipe}
                 />
                 <RecipeCarousel
                     title="Công thức phổ biến trong tuần"
                     listRecipe={recipeByPopular.data}
                     loading={recipeByPopular.loading}
+                    callBackRefresh={callBackRefreshRecipe}
                 />
             </div>
         );
