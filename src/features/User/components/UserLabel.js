@@ -39,11 +39,15 @@ class UserLabel extends Component {
                                 {
                                     isFollow ?
                                         <AntButton
+                                            className="btn-follow"
                                             onClick={onClickUnfollow}
+                                            type="dashed"
                                         >
                                             Bỏ theo dõi
                                         </AntButton>
                                         : <AntButton
+                                            type="dashed"
+                                            className="btn-follow"
                                             onClick={onClickFollow}
                                         >
                                             Theo dõi

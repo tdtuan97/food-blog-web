@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {withRouter} from "react-router-dom";
 import recipeImgDefault from "@images/recipe-default.jpg";
 import { Card } from "antd";
 import { HeartOutlined, HeartFilled } from "@ant-design/icons";
@@ -134,4 +135,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RecipeCard)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RecipeCard))
