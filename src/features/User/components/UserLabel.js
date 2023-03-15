@@ -1,19 +1,18 @@
-import React, { Component } from 'react';
-import { Avatar } from "antd";
+import React, {Component} from 'react';
+import {Avatar} from "antd";
 import helpers from "@ultis/helpers";
-import { Link, withRouter } from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import BadgeImageDefault from "@images/recipe-default.jpg";
-import { UserOutlined } from "@ant-design/icons";
-import { AntButton, FollowTag } from '@src/layouts';
+import {UserOutlined} from "@ant-design/icons";
+import {FollowTag} from '@src/layouts';
 
 class UserLabel extends Component {
     render() {
         const user = this.props.user;
         const {
-            callBackRefresh,
-            isFollow,
-            isPublic,
-        } = this.props
+                  callBackRefresh,
+                  isPublic,
+              }    = this.props
 
         return (
             <div className="user-block">
@@ -26,20 +25,20 @@ class UserLabel extends Component {
                                         size={80}
                                         src={<img
                                             src={helpers.generateFullImage(user.avatar)}
-                                            alt="" />}
+                                            alt=""/>}
                                     /> : <Avatar
                                         size={80}
-                                        icon={<UserOutlined />}
+                                        icon={<UserOutlined/>}
                                     />
                             }
                         </div>
                         <div className="right">
-                            <div>
+                            <div className="name">
                                 <Link to={`/user/${user.userId}`} className="label">{user.fullName}</Link>
                                 {
                                     isPublic ? <FollowTag
                                         id={user.userId}
-                                        isFollow={isFollow}
+                                        isFollow={user.isFollow}
                                         callBackRefresh={callBackRefresh}
                                     /> : null
                                 }

@@ -34,7 +34,7 @@ export function reducer(state = initialState, action) {
                 },
             }
         }
-        case CONSTANTS.GET_USER_F0LLOW: {
+        case CONSTANTS.GET_USER_FOLLOW: {
             return {
                 ...state,
                 userFollow: {
@@ -44,7 +44,7 @@ export function reducer(state = initialState, action) {
                 },
             }
         }
-        case CONSTANTS.GET_USER_F0LLOW_LOADING: {
+        case CONSTANTS.GET_USER_FOLLOW_LOADING: {
             return {
                 ...state,
                 userFollow: {

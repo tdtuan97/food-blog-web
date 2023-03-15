@@ -109,7 +109,7 @@ function followUserLoadingAction() {
 export function unfollowUser(id) {
     return dispatch => {
         dispatch(unfollowUserLoadingAction())
-        dispatch(apiDelete(`follow/delete/${id}`, {}, {}, unfollowUserAction))
+        dispatch(apiDelete(`follow/delete/${id}`, {}, unfollowUserAction))
     };
 }
 function unfollowUserAction(response) {

@@ -1,6 +1,7 @@
-import { followUser, unfollowUser } from '@src/features/User/redux/actions';
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import {followUser, unfollowUser} from '@src/features/User/redux/actions';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {AntButton} from "@layouts";
 
 class Container extends Component {
     onClickFollow = () => {
@@ -8,20 +9,20 @@ class Container extends Component {
     }
 
     onClickUnfollow = () => {
-        this.props.followUser(this.props.id)
+        this.props.unfollowUser(this.props.id)
     }
 
     componentDidUpdate(prevProps) {
         let {
-            id,
-            callBackRefresh
-        } = this.props
+                id,
+                callBackRefresh
+            } = this.props
 
         let currentFollow = this.props.user.follow
-        let prevFollow = prevProps.user.follow
+        let prevFollow    = prevProps.user.follow
 
         let currentUnfollow = this.props.user.unfollow
-        let prevUnfollow = prevProps.user.unfollow
+        let prevUnfollow    = prevProps.user.unfollow
 
         if (currentFollow.data !== prevFollow.data) {
             if (callBackRefresh) {
@@ -38,33 +39,31 @@ class Container extends Component {
 
     render() {
         let {
-            isFollow,
-        } = this.props
+                user,
+                isFollow,
+            }       = this.props
+        let loading = user.follow.loading || user.unfollow.loading
         return (
-            <div>
+            <span className="follow-tag">
                 {
                     isFollow ?
                         <AntButton
-                            className="btn-follow"
+                            loading={loading}
+                            //type="dashed"
                             onClick={this.onClickUnfollow}
-                            type="dashed"
                         >
                             Bỏ theo dõi
                         </AntButton>
                         : <AntButton
-                            type="dashed"
-                            className="btn-follow"
+                            loading={loading}
+                            //type="dashed"
                             onClick={this.onClickFollow}
                         >
                             Theo dõi
                         </AntButton>
                 }
-            </div>
+            </span>
         )
-    }
-
-    componentDidUpdate() {
-
     }
 }
 
@@ -83,9 +82,9 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
     return {
         router: state.router,
-        auth: state.auth,
+        auth  : state.auth,
         common: state.common,
-        user: state.user,
+        user  : state.user,
     }
 }
 

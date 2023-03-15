@@ -1,40 +1,52 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import President from './President';
 import {
     getRecipeByFollowUser,
 } from "@features/Home/redux/actions";
-import { withRouter } from "react-router-dom";
-import { reset } from "@common/crud";
-import { followUser, getUser, getUserFollow, getUserFollowing, unfollowUser } from "@features/User/redux/actions";
-import { getListRecipeManagement } from '@src/features/ListRecipe/redux/actions';
+import {withRouter} from "react-router-dom";
+import {reset} from "@common/crud";
+import {followUser, getUser, getUserFollow, getUserFollowing, unfollowUser} from "@features/User/redux/actions";
+import {getListRecipeManagement} from '@src/features/ListRecipe/redux/actions';
 import helpers from '@src/ultis/helpers';
 
 class Container extends Component {
-    callBackRefresh = (userId) => {
-        // Refresh
+    callBackRefresh = () => {
+        const {id} = this.props.match.params;
+        this.props.getUser(id);
+        this.props.getUserFollow(id);
+        this.props.getUserFollowing(id);
     }
 
     render() {
         const {
-            recipeByFollowUser,
-        } = this.props.home
+                  recipeByFollowUser,
+              } = this.props.home
         const {
-            list,
-        } = this.props.listRecipe
-        let user = this.props.user.user.data ?? {}
+                  list,
+              } = this.props.listRecipe
+        const {
+                  user,
+                  userFollow,
+                  userFollowing,
+              } = this.props.user
+
+        let userData = user.data ?? {}
 
         return (
             <President
+                callBackRefresh={this.callBackRefresh}
                 listRecipe={list}
                 recipeByFollowUser={recipeByFollowUser}
-                user={user}
+                user={userData}
+                userFollow={userFollow}
+                userFollowing={userFollowing}
             />
         )
     }
 
     componentDidMount() {
-        const { id } = this.props.match.params;
+        const {id} = this.props.match.params;
         if (helpers.getAuthUserId() === id) {
             this.props.history.push(`/profile`)
         }
@@ -71,7 +83,7 @@ function mapDispatchToProps(dispatch) {
         followUser: (id) => {
             dispatch(followUser(id));
         },
-        
+
         unfollowUser: (id) => {
             dispatch(unfollowUser(id));
         },
@@ -88,9 +100,9 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
-        home: state.home,
-        auth: state.auth,
-        user: state.user,
+        home      : state.home,
+        auth      : state.auth,
+        user      : state.user,
         listRecipe: state.listRecipe,
     }
 }

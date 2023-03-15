@@ -1,33 +1,37 @@
-import React, { Component } from 'react';
-import { Tabs } from "antd";
-import { withRouter } from "react-router-dom";
-import { RecipeCarousel } from "@features/Home/views/HomePage/components";
-import { ListRecipeCarousel } from "./";
+import React, {Component} from 'react';
+import {Tabs} from "antd";
+import {withRouter} from "react-router-dom";
+import {RecipeCarousel} from "@features/Home/views/HomePage/components";
+import {ListRecipeCarousel} from "./";
+import UserList from "@features/User/components/UserList";
 
 class UserLabel extends Component {
     render() {
-        const {
-            isPublicProfile,
-            listRecipe,
-            recipeByFollowUser,
-            countFollowed,
-            countFollowing,
-        } = this.props
         return (
             <div className="content-block">
                 <Tabs defaultActiveKey="1"
-                    items={this.items(listRecipe, recipeByFollowUser, countFollowed, countFollowing, isPublicProfile)}
-                    onChange={this.onChange}
+                      items={this.items()}
+                      onChange={this.onChange}
                 />
             </div>
         )
     }
 
-    items = (listRecipe, recipeByFollowUser, countFollowed, countFollowing, isPublicProfile = false) => {
+    items = () => {
+        const {
+                  isPublicProfile,
+                  listRecipe,
+                  recipeByFollowUser,
+                  countFollowed,
+                  countFollowing,
+                  userFollow,
+                  userFollowing,
+                  callBackRefresh
+              } = this.props
         return [
             {
-                key: '1',
-                label: 'Thư viện',
+                key     : '1',
+                label   : 'Thư viện',
                 children: <ListRecipeCarousel
                     isPublicProfile={isPublicProfile}
                     title="Danh sách công thức"
@@ -36,8 +40,8 @@ class UserLabel extends Component {
                 />,
             },
             {
-                key: '2',
-                label: 'Yêu thích',
+                key     : '2',
+                label   : 'Yêu thích',
                 children: <RecipeCarousel
                     title="Công thức yêu thích"
                     listRecipe={recipeByFollowUser.data}
@@ -45,21 +49,21 @@ class UserLabel extends Component {
                 />
             },
             {
-                key: '3',
-                label: `Đang theo dõi (${countFollowing})`,
-                children: <RecipeCarousel
-                    title="Công thức phổ biến trong tuần"
-                    listRecipe={[]}
-                    loading={false}
+                key     : '3',
+                label   : `Đang theo dõi (${countFollowing})`,
+                children: <UserList
+                    callBackRefresh={callBackRefresh}
+                    users={userFollowing.data}
+                    loading={userFollowing.loading}
                 />
             },
             {
-                key: '4',
-                label: `Người theo dõi (${countFollowed})`,
-                children: <RecipeCarousel
-                    title="Công thức phổ biến trong tuần"
-                    listRecipe={[]}
-                    loading={false}
+                key     : '4',
+                label   : `Người theo dõi (${countFollowed})`,
+                children: <UserList
+                    callBackRefresh={callBackRefresh}
+                    users={userFollow.data}
+                    loading={userFollow.loading}
                 />
             },
         ];

@@ -20,7 +20,12 @@ export function reducer(state = initialState, action) {
                 loading: true
             };
         case RESPONSE_ACTION:
-            if (payload.status >= 400 && payload.status !== 428 && payload.status !== 432 && payload.status !== 438) {
+            if (payload.status >= 400 && ([
+                428,
+                432,
+                438,
+                442,
+            ].indexOf(payload.status) === -1)) {
                 pushMessageError(payload.message);
             }
 

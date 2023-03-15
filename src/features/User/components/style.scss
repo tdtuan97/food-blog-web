@@ -19,10 +19,8 @@
                 }
             }
 
-            .btn-follow{
-                padding: 0;
-                height: 24px;
-                line-height: 24px;
+            .name{
+                position: relative;
             }
 
             .email {
@@ -35,6 +33,25 @@
     .introduce {
         //border-top: 1px solid $colorGray;
         padding-top: 3px;
+    }
+}
+
+.user-list{
+    .user-information {
+        .right {
+            .label {
+                font-size: 16px;
+            }
+
+            .name{
+                margin-top: 14px;
+            }
+
+            .follow-tag{
+                top: 1px;
+                right: 0;
+            }
+        }
     }
 }
 
