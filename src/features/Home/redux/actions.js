@@ -132,10 +132,13 @@ function getRecipeIngredientLoadingAction() {
  */
  export function getRecipeByKeyword(keyword) {
     return dispatch => {
-        dispatch(getRecipeByKeywordLoadingAction())
-        dispatch(apiGet(`recipe/search/`, {
-            q: keyword
-        }, {}, getRecipeByKeywordAction))
+        dispatch(getRecipeByKeywordLoadingAction(keyword))
+        if(keyword){
+            dispatch(apiGet(`recipe/searchRecipe`, {
+                q: keyword
+            }, {}, getRecipeByKeywordAction))
+        }
+        dispatch(getRecipeByKeywordAction({}))
     };
 }
 
@@ -146,9 +149,11 @@ function getRecipeByKeywordAction(response) {
     };
 }
 
-function getRecipeByKeywordLoadingAction() {
+function getRecipeByKeywordLoadingAction(keyword) {
     return {
         type   : CONSTANTS.SEARCH_REICPE_LOADING,
-        payload: null
+        payload: {
+            keyword: keyword
+        }
     };
 }

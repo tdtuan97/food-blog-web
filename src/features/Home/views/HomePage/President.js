@@ -10,6 +10,7 @@ class President extends Component {
             recipeByFollowUser,
             recipeByPopular,
             recipeByIngredient,
+            recipeBySearch,
 
             ingredientSelected,
             onSelectedIngredient,
@@ -22,6 +23,14 @@ class President extends Component {
 
         return (
             <div className="features feature-home">
+                {
+                    recipeBySearch.keyword !== "" ? <RecipeCarousel
+                        title="Kết quả tìm kiếm"
+                        listRecipe={recipeBySearch.data}
+                        loading={recipeBySearch.loading}
+                        callBackRefresh={callBackRefreshRecipe}
+                    /> : null
+                }
                 <RecipeFilter
                     title="Các nguyên liệu đang trong mùa"
                     filterItems={ingredientList.data ?? []}

@@ -4,7 +4,7 @@ import President from './President';
 import {
     getIngredientBySeason,
     getRecipeAll,
-    getRecipeByFollowUser, getRecipeIngredient,
+    getRecipeByFollowUser, getRecipeByKeyword, getRecipeIngredient,
     getRecipePopular
 } from "@features/Home/redux/actions";
 
@@ -53,7 +53,7 @@ class Container extends Component {
     /**
      * Refresh list recipe by ingredient
      */
-     callBackRefreshRecipe = () => {
+    callBackRefreshRecipe = () => {
         let { ingredientSelected } = this.state
         if (ingredientSelected) {
             this.props.getRecipeIngredient(ingredientSelected)
@@ -64,6 +64,11 @@ class Container extends Component {
 
         this.props.getRecipeByFollowUser();
         this.props.getRecipePopular();
+
+        const {
+            recipeBySearch,
+        } = this.props.home
+        this.props.getRecipeByKeyword(recipeBySearch.keyword);
     }
 
     render() {
@@ -72,7 +77,8 @@ class Container extends Component {
             recipeAll,
             recipeByFollowUser,
             recipeByPopular,
-            recipeByIngredient
+            recipeByIngredient,
+            recipeBySearch,
         } = this.props.home
 
         const { ingredientSelected } = this.state
@@ -83,6 +89,7 @@ class Container extends Component {
                 recipeByFollowUser={recipeByFollowUser}
                 recipeByPopular={recipeByPopular}
                 recipeByIngredient={recipeByIngredient}
+                recipeBySearch={recipeBySearch}
 
                 ingredientSelected={ingredientSelected}
                 onSelectedIngredient={this.onSelectedIngredient}
@@ -120,6 +127,10 @@ function mapDispatchToProps(dispatch) {
 
         getRecipeIngredient: (ingredient) => {
             dispatch(getRecipeIngredient(ingredient));
+        },
+        
+        getRecipeByKeyword: (keyword) => {
+            dispatch(getRecipeByKeyword(keyword));
         },
     };
 }

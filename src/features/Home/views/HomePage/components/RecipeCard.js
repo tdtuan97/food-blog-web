@@ -41,7 +41,6 @@ class RecipeCard extends Component {
 
     render() {
         const recipe = this.props.recipe;
-        const isLike = false;
         let user = recipe.User ?? {}
         return (
             <Card
@@ -73,7 +72,7 @@ class RecipeCard extends Component {
                 <div className="like-action">
                     <span className="like-icon">
                         {
-                            isLike ?
+                            recipe.isFavorite ?
                                 <HeartFilled
                                     onClick={this.onClickUnlike}
                                     style={{

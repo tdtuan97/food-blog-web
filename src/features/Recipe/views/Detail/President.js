@@ -70,31 +70,27 @@ class President extends Component {
         let myComment         = comments.myComment ?? {}
         let isEmptyComment    = isLoadingComments === false && userComments.length === 0;
 
-        let data          = detail.data ?? {}
+        let dataDetail          = detail.data ?? {}
         let loading       = detail.loading
         let isLockComment = !!myComment.recipeId && (isEdit === false)
 
-        let {
-                recipe,
-                ingredient,
-            }      = data
-        recipe     = recipe ?? {}
-        ingredient = ingredient ?? {}
-        let user   = recipe.User ?? {}
-        let steps  = recipe.Steps ?? []
+        let user       = dataDetail.User ?? {}
+        let steps      = dataDetail.Steps ?? []
+        let ingredient = dataDetail.DetailIngredients ?? []
         let {
                 amount,
                 cookingTime,
                 date,
                 description,
                 image,
+                isFavorite,
                 numberOfLikes,
                 preparationTime,
                 recipeId,
                 recipeName,
                 status,
                 userId,
-            }      = recipe
+            }      = dataDetail
 
         return (
             <div className="features feature-detail">
@@ -179,7 +175,7 @@ class President extends Component {
                                                 ingredient.map((item, i) => {
                                                     return (
                                                         <div className="ingredient-item" key={i}>
-                                                            {item.amount ?? ""} {item.ingredientName ?? ""}
+                                                            {item.amount ?? ""} {item.name ?? ""}
                                                         </div>
                                                     )
                                                 }) : null)

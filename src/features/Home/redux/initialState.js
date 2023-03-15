@@ -22,7 +22,13 @@ const initialState = {
     recipeByIngredient: {
         data   : [],
         loading: false,
-    }
+    },
+
+    recipeBySearch: {
+        keyword: "",
+        data   : [],
+        loading: false,
+    },
 };
 
 export default initialState;
