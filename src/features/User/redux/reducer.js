@@ -34,6 +34,44 @@ export function reducer(state = initialState, action) {
                 },
             }
         }
+        case CONSTANTS.GET_USER_F0LLOW: {
+            return {
+                ...state,
+                userFollow: {
+                    ...state.userFollow,
+                    loading: false,
+                    data   : payload.data ?? []
+                },
+            }
+        }
+        case CONSTANTS.GET_USER_F0LLOW_LOADING: {
+            return {
+                ...state,
+                userFollow: {
+                    ...state.userFollow,
+                    loading: true,
+                },
+            }
+        }
+        case CONSTANTS.GET_USER_FOLLOWING: {
+            return {
+                ...state,
+                userFollowing: {
+                    ...state.userFollowing,
+                    loading: false,
+                    data   : payload.data ?? []
+                },
+            }
+        }
+        case CONSTANTS.GET_USER_FOLLOWING_LOADING: {
+            return {
+                ...state,
+                userFollowing: {
+                    ...state.userFollowing,
+                    loading: true,
+                },
+            }
+        }
         case CONSTANTS.FOLLOW_USER: {
             if (payload.success){
                 pushMessageSuccess('Bạn đã theo dõi người này.')

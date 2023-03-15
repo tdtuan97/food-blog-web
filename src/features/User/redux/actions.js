@@ -28,6 +28,56 @@ function getUserLoadingAction() {
 }
 
 /**
+ * Get User FOLLOWING
+ * @returns
+ */
+ export function getUserFollowing(id) {
+    return dispatch => {
+        dispatch(getUserFollowingLoadingAction())
+        dispatch(apiGet(`user/getUserFollowing/${id}`, {}, {}, getUserFollowingAction))
+    };
+}
+
+function getUserFollowingAction(response) {
+    return {
+        type   : CONSTANTS.GET_USER_FOLLOWING,
+        payload: response
+    };
+}
+
+function getUserFollowingLoadingAction() {
+    return {
+        type   : CONSTANTS.GET_USER_FOLLOWING_LOADING,
+        payload: null
+    };
+}
+
+/**
+ * Get User FOLLOW
+ * @returns
+ */
+ export function getUserFollow(id) {
+    return dispatch => {
+        dispatch(getUserFollowLoadingAction())
+        dispatch(apiGet(`user/getUserFollow/${id}`, {}, {}, getUserFollowAction))
+    };
+}
+
+function getUserFollowAction(response) {
+    return {
+        type   : CONSTANTS.GET_USER_FOLLOW,
+        payload: response
+    };
+}
+
+function getUserFollowLoadingAction() {
+    return {
+        type   : CONSTANTS.GET_USER_FOLLOWING_LOADING,
+        payload: null
+    };
+}
+
+/**
  * Get User
  * @returns
  */

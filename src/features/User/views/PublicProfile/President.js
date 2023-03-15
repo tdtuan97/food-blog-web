@@ -4,11 +4,10 @@ import { ContentTab, UserLabel } from "@features/User/components";
 class President extends Component {
     render() {
         const {
-            onClickFollow,
-            onClickUnfollow,
             user,
             listRecipe,
             recipeByFollowUser,
+            callBackRefresh
         } = this.props
 
         let userData = user.user ?? {}
@@ -17,11 +16,11 @@ class President extends Component {
         return (
             <div className="features feature-self-profile">
                 <UserLabel
-                    onClickFollow={onClickFollow}
-                    onClickUnfollow={onClickUnfollow}
+                    isPublic={true}
                     user={userData}
                 />
                 <ContentTab
+                    callBackRefresh={callBackRefresh}
                     isPublicProfile={true}
                     listRecipe={listRecipe}
                     recipeByFollowUser={recipeByFollowUser}

@@ -4,15 +4,15 @@ import helpers from "@ultis/helpers";
 import { Link, withRouter } from "react-router-dom";
 import BadgeImageDefault from "@images/recipe-default.jpg";
 import { UserOutlined } from "@ant-design/icons";
-import { AntButton } from '@src/layouts';
+import { AntButton, FollowTag } from '@src/layouts';
 
 class UserLabel extends Component {
     render() {
         const user = this.props.user;
         const {
-            onClickFollow,
-            onClickUnfollow,
-            isFollow
+            callBackRefresh,
+            isFollow,
+            isPublic,
         } = this.props
 
         return (
@@ -37,23 +37,12 @@ class UserLabel extends Component {
                             <div>
                                 <Link to={`/user/${user.userId}`} className="label">{user.fullName}</Link>
                                 {
-                                    isFollow ?
-                                        <AntButton
-                                            className="btn-follow"
-                                            onClick={onClickUnfollow}
-                                            type="dashed"
-                                        >
-                                            Bỏ theo dõi
-                                        </AntButton>
-                                        : <AntButton
-                                            type="dashed"
-                                            className="btn-follow"
-                                            onClick={onClickFollow}
-                                        >
-                                            Theo dõi
-                                        </AntButton>
+                                    isPublic ? <FollowTag
+                                        id={user.userId}
+                                        isFollow={isFollow}
+                                        callBackRefresh={callBackRefresh}
+                                    /> : null
                                 }
-
                             </div>
                             <div className="email">{user.email}</div>
                             {

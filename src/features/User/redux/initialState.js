@@ -3,6 +3,14 @@ const initialState = {
         data: {},
         loading: false,
     },
+    userFollow:{
+        data: {},
+        loading: false,
+    },
+    userFollowing:{
+        data: {},
+        loading: false,
+    },
     follow:{
         data: {},
         loading: false,

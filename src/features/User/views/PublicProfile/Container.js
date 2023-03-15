@@ -6,18 +6,15 @@ import {
 } from "@features/Home/redux/actions";
 import { withRouter } from "react-router-dom";
 import { reset } from "@common/crud";
-import { followUser, getUser, unfollowUser } from "@features/User/redux/actions";
+import { followUser, getUser, getUserFollow, getUserFollowing, unfollowUser } from "@features/User/redux/actions";
 import { getListRecipeManagement } from '@src/features/ListRecipe/redux/actions';
 import helpers from '@src/ultis/helpers';
 
 class Container extends Component {
-    onClickFollow = (userId) => {
-
+    callBackRefresh = (userId) => {
+        // Refresh
     }
 
-    onClickUnfollow = (userId) => {
-        
-    }
     render() {
         const {
             recipeByFollowUser,
@@ -29,8 +26,6 @@ class Container extends Component {
 
         return (
             <President
-                onClickFollow={this.onClickFollow}
-                onClickUnfollow={this.onClickUnfollow}
                 listRecipe={list}
                 recipeByFollowUser={recipeByFollowUser}
                 user={user}
@@ -46,6 +41,8 @@ class Container extends Component {
         this.props.getRecipeByFollowUser();
         this.props.getListRecipeManagement(id);
         this.props.getUser(id);
+        this.props.getUserFollow(id);
+        this.props.getUserFollowing(id);
     }
 
     componentWillUnmount() {
@@ -77,6 +74,14 @@ function mapDispatchToProps(dispatch) {
         
         unfollowUser: (id) => {
             dispatch(unfollowUser(id));
+        },
+
+        getUserFollow: (id) => {
+            dispatch(getUserFollow(id));
+        },
+
+        getUserFollowing: (id) => {
+            dispatch(getUserFollowing(id));
         },
     };
 }
