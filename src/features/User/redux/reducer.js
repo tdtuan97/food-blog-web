@@ -81,7 +81,6 @@ export function reducer(state = initialState, action) {
                 follow: {
                     ...state.follow,
                     loading: false,
-                    uuid: null,
                     data: payload.data ?? {}
                 },
                 unfollow: {
@@ -108,7 +107,6 @@ export function reducer(state = initialState, action) {
                 unfollow: {
                     ...state.unfollow,
                     loading: false,
-                    uuid: null,
                     data: payload.data ?? {}
                 },
                 follow: {

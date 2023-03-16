@@ -26,19 +26,22 @@ class Container extends Component {
             callBackRefresh
         } = this.props
 
+        let isClickFollow = this.props.user.follow.uuid === this.state.uuid;
+        let isClickUnfollow = this.props.user.unfollow.uuid === this.state.uuid;
+
         let currentFollow = this.props.user.follow
         let prevFollow = prevProps.user.follow
 
         let currentUnfollow = this.props.user.unfollow
         let prevUnfollow = prevProps.user.unfollow
 
-        if (currentFollow.data !== prevFollow.data) {
+        if ((currentFollow.data !== prevFollow.data) && isClickFollow) {
             if (callBackRefresh) {
                 callBackRefresh(id)
             }
         }
 
-        if (currentUnfollow.data !== prevUnfollow.data) {
+        if ((currentUnfollow.data !== prevUnfollow.data) && isClickUnfollow) {
             if (callBackRefresh) {
                 callBackRefresh(id)
             }
@@ -53,7 +56,7 @@ class Container extends Component {
 
         let stateId = this.state.uuid
         let followLoading = user.follow.loading && user.follow.uuid === stateId
-        let unfollowLoading = user.unfollow.loading && user.follow.uuid === stateId
+        let unfollowLoading = user.unfollow.loading && user.unfollow.uuid === stateId
         return (
             <span className="follow-tag">
                 {

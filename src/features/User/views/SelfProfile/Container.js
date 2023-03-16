@@ -12,9 +12,7 @@ import {getListRecipeManagement} from "@features/ListRecipe/redux/actions";
 class Container extends Component {
     callBackRefresh = (userId) => {
         const id = helpers.getAuthUserId();
-        this.props.getUser(id);
-        this.props.getUserFollow(id);
-        this.props.getUserFollowing(id);
+        this.refreshData(id)
     }
 
     render() {
@@ -46,15 +44,15 @@ class Container extends Component {
 
     componentDidMount() {
         const id = helpers.getAuthUserId();
-        this.props.getRecipeByFollowUser();
-        this.props.getListRecipeManagement(id);
-        this.props.getUser(id);
-        this.props.getUserFollow(id);
-        this.props.getUserFollowing(id);
+        this.refreshData(id)
     }
 
-    componentWillUnmount() {
-        //this.props.reset()
+    refreshData = (userId) => {
+        this.props.getRecipeByFollowUser();
+        this.props.getListRecipeManagement(userId);
+        this.props.getUser(userId);
+        this.props.getUserFollow(userId);
+        this.props.getUserFollowing(userId);
     }
 }
 

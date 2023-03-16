@@ -7,6 +7,7 @@ import {
     getRecipeByFollowUser, getRecipeByKeyword, getRecipeIngredient,
     getRecipePopular
 } from "@features/Home/redux/actions";
+import helpers from '@src/ultis/helpers';
 
 class Container extends Component {
     constructor(props) {
@@ -54,6 +55,7 @@ class Container extends Component {
      * Refresh list recipe by ingredient
      */
     callBackRefreshRecipe = () => {
+        const id = helpers.getAuthUserId();
         let { ingredientSelected } = this.state
         if (ingredientSelected) {
             this.props.getRecipeIngredient(ingredientSelected)
@@ -100,6 +102,7 @@ class Container extends Component {
     }
 
     componentDidMount() {
+        const id = helpers.getAuthUserId();
         this.props.getIngredientBySeason();
         this.props.getRecipeAll();
         this.props.getRecipeByFollowUser();

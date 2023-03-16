@@ -58,7 +58,7 @@ function getRecipeAllLoadingAction() {
 export function getRecipeByFollowUser() {
     return dispatch => {
         dispatch(getRecipeByFollowUserLoadingAction())
-        dispatch(apiGet('recipe/getAllRecipe', {}, {}, getRecipeByFollowUserAction))
+        dispatch(apiGet(`recipe/getRecipeFromFollowers`, {}, {}, getRecipeByFollowUserAction))
     };
 }
 

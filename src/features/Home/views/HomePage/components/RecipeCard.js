@@ -117,18 +117,21 @@ class RecipeCard extends Component {
         )
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
+    componentDidUpdate(prevProps) {
         let currentLikeRecipe = this.props.recipeReducer.likeRecipe
         let prevLikeRecipe = prevProps.recipeReducer.likeRecipe
+
+        let isClickLike = this.props.recipeReducer.likeRecipe.uuid === this.state.uuid;
+        let isClickUnLike = this.props.recipeReducer.unlikeRecipe.uuid === this.state.uuid;
 
         let currentUnlikeRecipe = this.props.recipeReducer.unlikeRecipe
         let prevUnlikeRecipe = prevProps.recipeReducer.unlikeRecipe
 
-        if (currentLikeRecipe.data !== prevLikeRecipe.data) {
+        if ((currentLikeRecipe.data !== prevLikeRecipe.data) && isClickLike) {
             this.props.callBackRefresh()
         }
 
-        if (currentUnlikeRecipe.data !== prevUnlikeRecipe.data) {
+        if ((currentUnlikeRecipe.data !== prevUnlikeRecipe.data) && isClickUnLike) {
             this.props.callBackRefresh()
         }
     }

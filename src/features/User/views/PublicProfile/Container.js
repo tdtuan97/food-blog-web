@@ -13,9 +13,7 @@ import helpers from '@src/ultis/helpers';
 class Container extends Component {
     callBackRefresh = () => {
         const {id} = this.props.match.params;
-        this.props.getUser(id);
-        this.props.getUserFollow(id);
-        this.props.getUserFollowing(id);
+        this.refreshData(id)
     }
 
     render() {
@@ -50,33 +48,31 @@ class Container extends Component {
         if (helpers.getAuthUserId() === parseInt(id)) {
             this.props.history.push(`/profile`)
         }
-        this.props.getRecipeByFollowUser();
-        this.props.getListRecipeManagement(id);
-        this.props.getUser(id);
-        this.props.getUserFollow(id);
-        this.props.getUserFollowing(id);
+        this.refreshData(id)
     }
 
     componentDidUpdate(prevProps) {
         let currentId = this.props.match.params.id
         let prevId    = prevProps.match.params.id
 
-        console.log(helpers.getAuthUserId())
-        console.log(currentId)
         if (helpers.getAuthUserId() === parseInt(currentId)) {
             this.props.history.push(`/profile`)
         }
         if(currentId !== prevId){
-            this.props.getRecipeByFollowUser();
-            this.props.getListRecipeManagement(currentId);
-            this.props.getUser(currentId);
-            this.props.getUserFollow(currentId);
-            this.props.getUserFollowing(currentId);
+            this.refreshData(currentId)
         }
     }
 
     componentWillUnmount() {
         this.props.reset()
+    }
+
+    refreshData = (userId) => {
+        this.props.getRecipeByFollowUser();
+        this.props.getListRecipeManagement(userId);
+        this.props.getUser(userId);
+        this.props.getUserFollow(userId);
+        this.props.getUserFollowing(userId);
     }
 }
 

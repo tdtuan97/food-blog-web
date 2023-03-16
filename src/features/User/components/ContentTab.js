@@ -44,6 +44,7 @@ class UserLabel extends Component {
                 label   : 'Yêu thích',
                 children: <RecipeCarousel
                     title="Công thức yêu thích"
+                    callBackRefresh={callBackRefresh}
                     listRecipe={recipeByFollowUser.data}
                     loading={recipeByFollowUser.loading}
                 />

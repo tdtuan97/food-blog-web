@@ -204,14 +204,11 @@ export function reducer(state = initialState, action) {
                 likeRecipe: {
                     ...state.likeRecipe,
                     loading: false,
-                    uuid: null,
                     data: data ?? {}
                 },
                 unlikeRecipe: {
-                    ...state.unlikeRecipe,
-                    uuid: null,
-                    data: {}
-                },
+                    ...initialState.unlikeRecipe
+                }
             }
         case CONSTANTS.RECIPE_LIKE_LOADING: {
             return {
@@ -232,13 +229,10 @@ export function reducer(state = initialState, action) {
                 unlikeRecipe: {
                     ...state.unlikeRecipe,
                     loading: false,
-                    uuid: null,
                     data: payload.success === true
                 },
                 likeRecipe: {
-                    ...state.likeRecipe,
-                    uuid: null,
-                    data: {}
+                    ...initialState.likeRecipe
                 },
             }
         case CONSTANTS.RECIPE_UNLIKE_LOADING: {

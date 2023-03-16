@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 class ListRecipeCarousel extends Component {
     render() {
-        const { title, listRecipe, loading, isPublicProfile } = this.props
+        const { title, listRecipe, loading, isPublicProfile, callBackRefresh } = this.props
 
         return (
             <div className="list-recipe-carousel">
@@ -34,7 +34,9 @@ class ListRecipeCarousel extends Component {
                             listRecipe.map((listRecipe, i) => {
                                 return (
                                     <div key={i}>
-                                        <ListRecipeItem listRecipe={listRecipe} />
+                                        <ListRecipeItem
+                                            listRecipe={listRecipe}
+                                        />
                                     </div>
                                 )
                             }) : null)
