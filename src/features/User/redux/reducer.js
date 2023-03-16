@@ -1,6 +1,6 @@
 import initialState from "./initialState";
 import * as CONSTANTS from "./constants";
-import {RESET_ACTION} from "@features/Common/redux/constants";
+import { RESET_ACTION } from "@features/Common/redux/constants";
 import { pushMessageSuccess } from "@src/layouts";
 
 export function reducer(state = initialState, action) {
@@ -21,7 +21,7 @@ export function reducer(state = initialState, action) {
                 user: {
                     ...state.user,
                     loading: false,
-                    data   : payload.data ?? {}
+                    data: payload.data ?? {}
                 },
             }
         }
@@ -40,7 +40,7 @@ export function reducer(state = initialState, action) {
                 userFollow: {
                     ...state.userFollow,
                     loading: false,
-                    data   : payload.data ?? []
+                    data: payload.data ?? []
                 },
             }
         }
@@ -59,7 +59,7 @@ export function reducer(state = initialState, action) {
                 userFollowing: {
                     ...state.userFollowing,
                     loading: false,
-                    data   : payload.data ?? []
+                    data: payload.data ?? []
                 },
             }
         }
@@ -68,12 +68,12 @@ export function reducer(state = initialState, action) {
                 ...state,
                 userFollowing: {
                     ...state.userFollowing,
-                    loading: true,
+                    loading: true
                 },
             }
         }
         case CONSTANTS.FOLLOW_USER: {
-            if (payload.success){
+            if (payload.success) {
                 pushMessageSuccess('Bạn đã theo dõi người này.')
             }
             return {
@@ -81,7 +81,8 @@ export function reducer(state = initialState, action) {
                 follow: {
                     ...state.follow,
                     loading: false,
-                    data   : payload.data ?? {}
+                    uuid: null,
+                    data: payload.data ?? {}
                 },
                 unfollow: {
                     ...initialState.unfollow,
@@ -94,11 +95,12 @@ export function reducer(state = initialState, action) {
                 follow: {
                     ...state.follow,
                     loading: true,
+                    uuid: payload.uuid,
                 },
             }
         }
         case CONSTANTS.UNFOLLOW_USER: {
-            if (payload.success){
+            if (payload.success) {
                 pushMessageSuccess('Bạn đã bỏ theo dõi người này.')
             }
             return {
@@ -106,7 +108,8 @@ export function reducer(state = initialState, action) {
                 unfollow: {
                     ...state.unfollow,
                     loading: false,
-                    data   : payload.data ?? {}
+                    uuid: null,
+                    data: payload.data ?? {}
                 },
                 follow: {
                     ...initialState.follow,
@@ -118,6 +121,7 @@ export function reducer(state = initialState, action) {
                 ...state,
                 unfollow: {
                     ...state.unfollow,
+                    uuid: payload.uuid,
                     loading: true,
                 },
             }

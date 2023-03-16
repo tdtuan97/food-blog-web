@@ -39,10 +39,12 @@ const initialState = {
     likeRecipe: {
         data   : {},
         loading: false,
+        uuid   : null,
     },
     unlikeRecipe: {
         data   : false,
         loading: false,
+        uuid   : null,
     },
 };
 

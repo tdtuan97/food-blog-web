@@ -251,9 +251,9 @@ function deleteRecipeCommentLoadingAction() {
  * Like recipe by id
  * @returns
  */
- export function postLikeRecipe(recipeId) {
+ export function postLikeRecipe(uuid, recipeId) {
     return dispatch => {
-        dispatch(postLikeRecipeLoadingAction())
+        dispatch(postLikeRecipeLoadingAction(uuid))
         dispatch(apiPost(`favorite/create/${recipeId}`, {}, {}, postLikeRecipeAction))
     };
 }
@@ -265,10 +265,12 @@ function postLikeRecipeAction(response) {
     };
 }
 
-function postLikeRecipeLoadingAction() {
+function postLikeRecipeLoadingAction(uuid) {
     return {
         type   : CONSTANTS.RECIPE_LIKE_LOADING,
-        payload: null
+        payload: {
+            uuid: uuid
+        }
     };
 }
 
@@ -276,9 +278,9 @@ function postLikeRecipeLoadingAction() {
  * Unlike recipe by id
  * @returns
  */
- export function postUnlikeRecipe(recipeId) {
+ export function postUnlikeRecipe(uuid, recipeId) {
     return dispatch => {
-        dispatch(postUnlikeRecipeLoadingAction())
+        dispatch(postUnlikeRecipeLoadingAction(uuid))
         dispatch(apiDelete(`favorite/delete/${recipeId}`, {}, postUnlikeRecipeAction))
     };
 }
@@ -290,9 +292,11 @@ function postUnlikeRecipeAction(response) {
     };
 }
 
-function postUnlikeRecipeLoadingAction() {
+function postUnlikeRecipeLoadingAction(uuid) {
     return {
         type   : CONSTANTS.RECIPE_UNLIKE_LOADING,
-        payload: null
+        payload: {
+            uuid: uuid
+        }
     };
 }

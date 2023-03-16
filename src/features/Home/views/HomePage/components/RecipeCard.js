@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {withRouter} from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import recipeImgDefault from "@images/recipe-default.jpg";
 import { Card } from "antd";
 import { HeartOutlined, HeartFilled } from "@ant-design/icons";
@@ -11,18 +11,25 @@ import { postLikeRecipe, postUnlikeRecipe } from '@src/features/Recipe/redux/act
 
 class RecipeCard extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            uuid: helpers.makeUUID()
+        }
+    }
+
     /**
      * Click like
      */
     onClickLike = () => {
-        this.props.postLikeRecipe(this.props.recipe.recipeId)
+        this.props.postLikeRecipe(this.state.uuid, this.props.recipe.recipeId)
     }
 
     /**
      * Click unlike
      */
     onClickUnlike = () => {
-        this.props.postUnlikeRecipe(this.props.recipe.recipeId)
+        this.props.postUnlikeRecipe(this.state.uuid, this.props.recipe.recipeId)
     }
 
     /**
@@ -42,8 +49,19 @@ class RecipeCard extends Component {
     render() {
         const recipe = this.props.recipe;
         let user = recipe.User ?? {}
+        let stateId = this.state.uuid
+
+        let {
+            likeRecipe,
+            unlikeRecipe
+        } = this.props.recipeReducer
+
+        let likeLoading = likeRecipe.loading && likeRecipe.uuid === stateId
+        let unlikeLoading = unlikeRecipe.loading && unlikeRecipe.uuid === stateId
+
         return (
             <Card
+                loading={likeLoading || unlikeLoading}
                 className="card-recipe"
                 hoverable
                 cover={
@@ -101,16 +119,16 @@ class RecipeCard extends Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         let currentLikeRecipe = this.props.recipeReducer.likeRecipe
-        let prevLikeRecipe= prevProps.recipeReducer.likeRecipe
+        let prevLikeRecipe = prevProps.recipeReducer.likeRecipe
 
         let currentUnlikeRecipe = this.props.recipeReducer.unlikeRecipe
         let prevUnlikeRecipe = prevProps.recipeReducer.unlikeRecipe
 
-        if(currentLikeRecipe.data !== prevLikeRecipe.data){
+        if (currentLikeRecipe.data !== prevLikeRecipe.data) {
             this.props.callBackRefresh()
         }
 
-        if(currentUnlikeRecipe.data !== prevUnlikeRecipe.data){
+        if (currentUnlikeRecipe.data !== prevUnlikeRecipe.data) {
             this.props.callBackRefresh()
         }
     }
@@ -118,12 +136,12 @@ class RecipeCard extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        postLikeRecipe: (id) => {
-            dispatch(postLikeRecipe(id));
+        postLikeRecipe: (uuid, id) => {
+            dispatch(postLikeRecipe(uuid, id));
         },
 
-        postUnlikeRecipe: (id) => {
-            dispatch(postUnlikeRecipe(id));
+        postUnlikeRecipe: (uuid, id) => {
+            dispatch(postUnlikeRecipe(uuid, id));
         },
     };
 }

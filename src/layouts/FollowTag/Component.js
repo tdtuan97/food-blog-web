@@ -1,28 +1,36 @@
-import {followUser, unfollowUser} from '@src/features/User/redux/actions';
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {AntButton} from "@layouts";
+import { followUser, unfollowUser } from '@src/features/User/redux/actions';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { AntButton } from "@layouts";
+import helpers from '@src/ultis/helpers';
 
 class Container extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            uuid: helpers.makeUUID()
+        }
+    }
+    
     onClickFollow = () => {
-        this.props.followUser(this.props.id)
+        this.props.followUser(this.state.uuid, this.props.id)
     }
 
     onClickUnfollow = () => {
-        this.props.unfollowUser(this.props.id)
+        this.props.unfollowUser(this.state.uuid, this.props.id)
     }
 
     componentDidUpdate(prevProps) {
         let {
-                id,
-                callBackRefresh
-            } = this.props
+            id,
+            callBackRefresh
+        } = this.props
 
         let currentFollow = this.props.user.follow
-        let prevFollow    = prevProps.user.follow
+        let prevFollow = prevProps.user.follow
 
         let currentUnfollow = this.props.user.unfollow
-        let prevUnfollow    = prevProps.user.unfollow
+        let prevUnfollow = prevProps.user.unfollow
 
         if (currentFollow.data !== prevFollow.data) {
             if (callBackRefresh) {
@@ -39,23 +47,26 @@ class Container extends Component {
 
     render() {
         let {
-                user,
-                isFollow,
-            }       = this.props
-        let loading = user.follow.loading || user.unfollow.loading
+            user,
+            isFollow,
+        } = this.props
+
+        let stateId = this.state.uuid
+        let followLoading = user.follow.loading && user.follow.uuid === stateId
+        let unfollowLoading = user.unfollow.loading && user.follow.uuid === stateId
         return (
             <span className="follow-tag">
                 {
                     isFollow ?
                         <AntButton
-                            loading={loading}
+                            loading={unfollowLoading}
                             //type="dashed"
                             onClick={this.onClickUnfollow}
                         >
                             Bỏ theo dõi
                         </AntButton>
                         : <AntButton
-                            loading={loading}
+                            loading={followLoading}
                             //type="dashed"
                             onClick={this.onClickFollow}
                         >
@@ -69,12 +80,12 @@ class Container extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        followUser: (id) => {
-            dispatch(followUser(id));
+        followUser: (uuid, id) => {
+            dispatch(followUser(uuid, id));
         },
 
-        unfollowUser: (id) => {
-            dispatch(unfollowUser(id));
+        unfollowUser: (uuid, id) => {
+            dispatch(unfollowUser(uuid, id));
         },
     };
 }
@@ -82,9 +93,9 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
     return {
         router: state.router,
-        auth  : state.auth,
+        auth: state.auth,
         common: state.common,
-        user  : state.user,
+        user: state.user,
     }
 }
 

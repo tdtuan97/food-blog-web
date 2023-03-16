@@ -81,9 +81,9 @@ function getUserFollowLoadingAction() {
  * Get User
  * @returns
  */
-export function followUser(id) {
+export function followUser(uuid, id) {
     return dispatch => {
-        dispatch(followUserLoadingAction())
+        dispatch(followUserLoadingAction(uuid))
         dispatch(apiPost(`follow/create/${id}`, {}, {}, followUserAction))
     };
 }
@@ -95,10 +95,12 @@ function followUserAction(response) {
     };
 }
 
-function followUserLoadingAction() {
+function followUserLoadingAction(uuid) {
     return {
         type   : CONSTANTS.FOLLOW_USER_LOADING,
-        payload: null
+        payload: {
+            uuid: uuid
+        }
     };
 }
 
@@ -106,7 +108,7 @@ function followUserLoadingAction() {
  * Get User
  * @returns
  */
-export function unfollowUser(id) {
+export function unfollowUser(uuid, id) {
     return dispatch => {
         dispatch(unfollowUserLoadingAction())
         dispatch(apiDelete(`follow/delete/${id}`, {}, unfollowUserAction))
@@ -119,9 +121,11 @@ function unfollowUserAction(response) {
     };
 }
 
-function unfollowUserLoadingAction() {
+function unfollowUserLoadingAction(uuid) {
     return {
         type   : CONSTANTS.UNFOLLOW_USER_LOADING,
-        payload: null
+        payload: {
+            uuid: uuid
+        }
     };
 }

@@ -14,10 +14,12 @@ const initialState = {
     follow:{
         data: {},
         loading: false,
+        uuid: null
     },
     unfollow:{
         data: {},
         loading: false,
+        uuid: null
     }
 };
 
