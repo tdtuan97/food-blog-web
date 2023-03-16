@@ -47,7 +47,7 @@ class Container extends Component {
 
     componentDidMount() {
         const {id} = this.props.match.params;
-        if (helpers.getAuthUserId() === id) {
+        if (helpers.getAuthUserId() === parseInt(id)) {
             this.props.history.push(`/profile`)
         }
         this.props.getRecipeByFollowUser();
@@ -55,6 +55,24 @@ class Container extends Component {
         this.props.getUser(id);
         this.props.getUserFollow(id);
         this.props.getUserFollowing(id);
+    }
+
+    componentDidUpdate(prevProps) {
+        let currentId = this.props.match.params.id
+        let prevId    = prevProps.match.params.id
+
+        console.log(helpers.getAuthUserId())
+        console.log(currentId)
+        if (helpers.getAuthUserId() === parseInt(currentId)) {
+            this.props.history.push(`/profile`)
+        }
+        if(currentId !== prevId){
+            this.props.getRecipeByFollowUser();
+            this.props.getListRecipeManagement(currentId);
+            this.props.getUser(currentId);
+            this.props.getUserFollow(currentId);
+            this.props.getUserFollowing(currentId);
+        }
     }
 
     componentWillUnmount() {
