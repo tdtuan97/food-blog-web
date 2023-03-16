@@ -24,6 +24,7 @@ export function reducer(state = initialState, action) {
                 428,
                 432,
                 438,
+                441,
                 442,
             ].indexOf(payload.status) === -1)) {
                 pushMessageError(payload.message);
