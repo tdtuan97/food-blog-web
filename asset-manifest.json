@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/food-blog-web/static/css/main.0ea17d67.css",
-    "main.js": "/food-blog-web/static/js/main.3799c031.js",
+    "main.js": "/food-blog-web/static/js/main.6443af34.js",
     "static/media/recipe-default.jpg": "/food-blog-web/static/media/recipe-default.de0262eee2a167c786ad.jpg",
     "static/media/user.png": "/food-blog-web/static/media/user.1f2b6f5fb110d0f613f6.png",
     "static/media/OpenSans-MediumItalic.ttf": "/food-blog-web/static/media/OpenSans-MediumItalic.00b0286ec1643a480c09.ttf",
@@ -9,17 +9,17 @@
     "static/media/OpenSans-Medium.ttf": "/food-blog-web/static/media/OpenSans-Medium.65529e6c75fe516f596a.ttf",
     "static/media/OpenSans-Bold.ttf": "/food-blog-web/static/media/OpenSans-Bold.a0fe34bea92d4e1a84d6.ttf",
     "static/media/logo.png": "/food-blog-web/static/media/logo.0fffdae2376720a92251.png",
-    "static/media/background.svg": "/food-blog-web/static/media/background.b7f964a997b44e1328153fe595bf8163.svg",
+    "static/media/background.svg": "/food-blog-web/static/media/background.d6c29e26d397a0423c47128db609f747.svg",
     "index.html": "/food-blog-web/index.html",
     "static/media/Bold.ttf": "/food-blog-web/static/media/Bold.31d6cfe0d16ae931b73c.ttf",
     "static/media/BoldItalic.ttf": "/food-blog-web/static/media/BoldItalic.31d6cfe0d16ae931b73c.ttf",
     "static/media/Medium.ttf": "/food-blog-web/static/media/Medium.31d6cfe0d16ae931b73c.ttf",
     "static/media/MediumItalic.ttf": "/food-blog-web/static/media/MediumItalic.31d6cfe0d16ae931b73c.ttf",
     "main.0ea17d67.css.map": "/food-blog-web/static/css/main.0ea17d67.css.map",
-    "main.3799c031.js.map": "/food-blog-web/static/js/main.3799c031.js.map"
+    "main.6443af34.js.map": "/food-blog-web/static/js/main.6443af34.js.map"
   },
   "entrypoints": [
     "static/css/main.0ea17d67.css",
-    "static/js/main.3799c031.js"
+    "static/js/main.6443af34.js"
   ]
 }
