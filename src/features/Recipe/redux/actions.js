@@ -9,7 +9,9 @@ import {apiDelete} from "@common/crud/actions";
 export function getRecipeManagement(userId) {
     return dispatch => {
         dispatch(getRecipeManagementLoadingAction())
-        dispatch(apiGet(`recipe/getRecipeByUserId/${userId}`, {}, {}, getRecipeManagementAction))
+        dispatch(apiGet(`recipe/getRecipeByUserId`, {
+            userId: userId
+        }, {}, getRecipeManagementAction))
     };
 }
 

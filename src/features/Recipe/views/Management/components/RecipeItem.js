@@ -17,8 +17,6 @@ class RecipeCard extends Component {
     render() {
         const recipe = this.props.recipe;
         const isLike = false;
-
-        console.log(recipe)
         return (
             <Card
                 className="card-recipe"

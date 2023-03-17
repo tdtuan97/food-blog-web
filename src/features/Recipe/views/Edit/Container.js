@@ -3,9 +3,7 @@ import {connect} from 'react-redux';
 import President from './President';
 import {
     getRecipe,
-    getRecipeComments,
     postRecipe,
-    postRecipeComment,
     updateRecipe
 } from "@features/Recipe/redux/actions";
 import {withRouter} from "react-router-dom";

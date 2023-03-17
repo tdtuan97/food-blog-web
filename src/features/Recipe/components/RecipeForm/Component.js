@@ -154,11 +154,11 @@ class CustomComponent extends Component {
     componentDidUpdate(prevProps) {
         let prevDetail          = prevProps.recipe.detail;
         let currentDetail       = this.props.recipe.detail;
-        let prevDetailRecipe    = prevDetail.data.recipe ?? {}
-        let currentDetailRecipe = currentDetail.data.recipe ?? {}
+        let prevDetailRecipe    = prevDetail.data ?? {}
+        let currentDetailRecipe = currentDetail.data ?? {}
 
         if (prevDetailRecipe.recipeId !== currentDetailRecipe.recipeId) {
-            let ingredient = currentDetail.data.ingredient ?? []
+            let ingredient = currentDetailRecipe.DetailIngredients ?? []
             let step       = currentDetailRecipe.Steps ?? [];
 
             let formData = {

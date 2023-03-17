@@ -8,6 +8,7 @@ class UserRecipes extends Component {
     render() {
         const {title, listRecipe, loading} = this.props
 
+        let listRecipeData = listRecipe.recipe ?? []
         return (
             <div className="recipe-carousel">
                 <div className="title">
@@ -26,11 +27,12 @@ class UserRecipes extends Component {
                             loading ? <Loading/> : null
                         }
                         {
-                            loading === false && listRecipe.length === 0 ? <DataEmpty title="Không có công thức."/> : null
+                            loading === false && listRecipeData.length === 0 ?
+                                <DataEmpty title="Không có công thức."/> : null
                         }
                         {
-                            (listRecipe.length ?
-                                listRecipe.map((recipe, i) => {
+                            (listRecipeData.length ?
+                                listRecipeData.map((recipe, i) => {
                                     return (
                                         <Col span={6} key={i}>
                                             <RecipeItem recipe={recipe}/>
