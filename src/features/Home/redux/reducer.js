@@ -125,6 +125,44 @@ export function reducer(state = initialState, action) {
                 },
             }
         }
+        case CONSTANTS.RECIPE_BY_FAVORITE: {
+            return {
+                ...state,
+                recipeByFavorite: {
+                    ...state.recipeByFavorite,
+                    loading: false,
+                    data   : payload.data ?? []
+                },
+            }
+        }
+        case CONSTANTS.RECIPE_BY_FAVORITE_LOADING: {
+            return {
+                ...state,
+                recipeByFavorite: {
+                    ...state.recipeByFavorite,
+                    loading: true,
+                },
+            }
+        }
+        case CONSTANTS.RECIPE_BY_USER_ID: {
+            return {
+                ...state,
+                recipeByUserId: {
+                    ...state.recipeByUserId,
+                    loading: false,
+                    data   : payload.data ?? []
+                },
+            }
+        }
+        case CONSTANTS.RECIPE_BY_USER_ID_LOADING: {
+            return {
+                ...state,
+                recipeByUserId: {
+                    ...state.recipeByUserId,
+                    loading: true,
+                },
+            }
+        }
         default:
             return state;
     }

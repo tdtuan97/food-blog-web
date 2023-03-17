@@ -1,5 +1,6 @@
 import {apiGet} from "@common/crud";
 import * as CONSTANTS from "./constants";
+import {RECIPE_BY_FAVORITE} from "./constants";
 
 /**
  * Get Ingredient By Season
@@ -155,5 +156,58 @@ function getRecipeByKeywordLoadingAction(keyword) {
         payload: {
             keyword: keyword
         }
+    };
+}
+
+/**
+ * Get recipe by follow user
+ * @returns
+ */
+export function getRecipeByFavorite() {
+    return dispatch => {
+        dispatch(getRecipeByFavoriteLoadingAction())
+        dispatch(apiGet(`recipe/getRecipeFavorite`, {}, {}, getRecipeByFavoriteAction))
+    };
+}
+
+function getRecipeByFavoriteAction(response) {
+    return {
+        type   : CONSTANTS.RECIPE_BY_FAVORITE,
+        payload: response
+    };
+}
+
+function getRecipeByFavoriteLoadingAction() {
+    return {
+        type   : CONSTANTS.RECIPE_BY_FAVORITE_LOADING,
+        payload: null
+    };
+}
+
+
+/**
+ * Get recipe by user ID
+ * @returns
+ */
+export function getRecipeByUserId(userId) {
+    return dispatch => {
+        dispatch(getRecipeByUserIdLoadingAction())
+        dispatch(apiGet(`recipe/getRecipeByUserId`, {
+            userId: userId
+        }, {}, getRecipeByUserIdAction))
+    };
+}
+
+function getRecipeByUserIdAction(response) {
+    return {
+        type   : CONSTANTS.RECIPE_BY_USER_ID,
+        payload: response
+    };
+}
+
+function getRecipeByUserIdLoadingAction() {
+    return {
+        type   : CONSTANTS.RECIPE_BY_USER_ID_LOADING,
+        payload: null
     };
 }

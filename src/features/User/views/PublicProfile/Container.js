@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import President from './President';
 import {
-    getRecipeByFollowUser,
+    getRecipeByFavorite,
+    getRecipeByFollowUser, getRecipeByUserId,
 } from "@features/Home/redux/actions";
 import {withRouter} from "react-router-dom";
 import {reset} from "@common/crud";
@@ -19,6 +20,8 @@ class Container extends Component {
     render() {
         const {
                   recipeByFollowUser,
+                  recipeByFavorite,
+                  recipeByUserId,
               } = this.props.home
         const {
                   list,
@@ -36,6 +39,8 @@ class Container extends Component {
                 callBackRefresh={this.callBackRefresh}
                 listRecipe={list}
                 recipeByFollowUser={recipeByFollowUser}
+                recipeByFavorite={recipeByFavorite}
+                recipeByUserId={recipeByUserId}
                 user={userData}
                 userFollow={userFollow}
                 userFollowing={userFollowing}
@@ -69,10 +74,12 @@ class Container extends Component {
 
     refreshData = (userId) => {
         this.props.getRecipeByFollowUser();
+        this.props.getRecipeByFavorite();
         this.props.getListRecipeManagement(userId);
         this.props.getUser(userId);
         this.props.getUserFollow(userId);
         this.props.getUserFollowing(userId);
+        this.props.getRecipeByUserId(userId);
     }
 }
 
@@ -108,6 +115,14 @@ function mapDispatchToProps(dispatch) {
 
         getUserFollowing: (id) => {
             dispatch(getUserFollowing(id));
+        },
+
+        getRecipeByFavorite: () => {
+            dispatch(getRecipeByFavorite());
+        },
+
+        getRecipeByUserId: (id) => {
+            dispatch(getRecipeByUserId(id));
         },
     };
 }

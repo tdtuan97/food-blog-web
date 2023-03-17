@@ -16,7 +16,7 @@ class ListRecipeCarousel extends Component {
                     !isPublicProfile ? <div className="btn-add">
                         <Link to={"/list-recipe/add"}>
                             <AntButton type="dashed">
-                                Thêm công thức mới
+                                Thêm danh sách mới
                             </AntButton>
                         </Link>
                     </div> : null

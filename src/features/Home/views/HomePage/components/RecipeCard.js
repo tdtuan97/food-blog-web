@@ -1,20 +1,25 @@
-import React, { Component } from 'react';
-import { withRouter } from "react-router-dom";
+import React, {Component} from 'react';
+import {withRouter} from "react-router-dom";
 import recipeImgDefault from "@images/recipe-default.jpg";
-import { Card } from "antd";
-import { HeartOutlined, HeartFilled } from "@ant-design/icons";
-import imgBookmarkOn from "@images/bookmark_on.png"
-import imgBookmarkOff from "@images/bookmark_off.png"
+import {Card, Checkbox, Modal} from "antd";
+import {HeartOutlined, HeartFilled, FileAddOutlined, LoadingOutlined} from "@ant-design/icons";
 import helpers from "@ultis/helpers";
-import { connect } from "react-redux";
-import { postLikeRecipe, postUnlikeRecipe } from '@src/features/Recipe/redux/actions';
+import {connect} from "react-redux";
+import {
+    addRecipeToList,
+    postLikeRecipe,
+    postUnlikeRecipe,
+    removeRecipeToList
+} from '@src/features/Recipe/redux/actions';
+import {Loading} from "@layouts";
 
 class RecipeCard extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            uuid: helpers.makeUUID()
+            uuid       : helpers.makeUUID(),
+            isModalOpen: false
         }
     }
 
@@ -33,6 +38,36 @@ class RecipeCard extends Component {
     }
 
     /**
+     * Click add/remove recipe to list
+     */
+    onChangeCheckbox = (recipeId, recipeListId, e) => {
+        let isAdd = e.target.checked
+        let uuid  = this.state.uuid
+        if (isAdd) {
+            this.props.addRecipeToList(uuid, recipeId, recipeListId)
+        } else {
+            this.props.removeRecipeToList(uuid, recipeId, recipeListId)
+        }
+    }
+
+    setIsModalOpen = (value) => {
+        this.setState({
+            ...this.state,
+            isModalOpen: value
+        })
+    }
+
+    showModal    = () => {
+        this.setIsModalOpen(true);
+    };
+    handleOk     = () => {
+        this.setIsModalOpen(false);
+    };
+    handleCancel = () => {
+        this.setIsModalOpen(false);
+    };
+
+    /**
      * Redirect to detail page
      */
     redirectToDetail = () => {
@@ -48,17 +83,22 @@ class RecipeCard extends Component {
 
     render() {
         const recipe = this.props.recipe;
-        let user = recipe.User ?? {}
-        let stateId = this.state.uuid
+        let user     = recipe.User ?? {}
+        let stateId  = this.state.uuid
 
         let {
-            likeRecipe,
-            unlikeRecipe
-        } = this.props.recipeReducer
+                likeRecipe,
+                unlikeRecipe
+            } = this.props.recipeReducer
 
-        let likeLoading = likeRecipe.loading && likeRecipe.uuid === stateId
+        const listRecipeByUser        = this.props.listRecipe.list.data ?? []
+        const listRecipeByUserLoading = this.props.listRecipe.list.loading
+
+        let likeLoading   = likeRecipe.loading && likeRecipe.uuid === stateId
         let unlikeLoading = unlikeRecipe.loading && unlikeRecipe.uuid === stateId
 
+        let listAdded    = getListIds(recipe.DetailLists);
+        let checkLoading = this.props.recipeReducer.addRecipeToList.loading || this.props.recipeReducer.removeRecipeToList.loading
         return (
             <Card
                 loading={likeLoading || unlikeLoading}
@@ -100,7 +140,7 @@ class RecipeCard extends Component {
                                     onClick={this.onClickLike}
                                     style={{
                                         //color: 'red'
-                                    }} />
+                                    }}/>
                         }
                     </span>
                     <span className="like-number">
@@ -108,30 +148,81 @@ class RecipeCard extends Component {
                     </span>
                 </div>
                 <span className="bookmark">
-                    <img
+                    <FileAddOutlined
+                        onClick={this.showModal}
+                    />
+                    {/*<img
                         src={imgBookmarkOff}
                         alt=""
-                    />
+                    />*/}
                 </span>
+
+                <Modal title="Thêm vào danh sách"
+                       open={this.state.isModalOpen}
+                       onOk={this.handleOk}
+                       onCancel={this.handleCancel}
+                >
+                    {
+                        listRecipeByUserLoading ? <Loading/> : null
+                    }
+                    {
+                        listRecipeByUser.map((item, idx) => {
+                            let isChecked = listAdded.indexOf(item.recipeListId) !== -1
+                            return (
+                                <div
+                                    key={idx}
+                                >
+                                    {checkLoading ? <Loading/> : null}
+                                    <Checkbox
+                                        checked={isChecked}
+                                        onChange={(value) => {
+                                            this.onChangeCheckbox(recipe.recipeId, item.recipeListId, value)
+                                        }}
+                                    >
+                                        {item.name}
+                                    </Checkbox>
+
+                                </div>
+                            )
+                        })
+                    }
+                </Modal>
             </Card>
         )
     }
 
     componentDidUpdate(prevProps) {
         let currentLikeRecipe = this.props.recipeReducer.likeRecipe
-        let prevLikeRecipe = prevProps.recipeReducer.likeRecipe
-
-        let isClickLike = this.props.recipeReducer.likeRecipe.uuid === this.state.uuid;
-        let isClickUnLike = this.props.recipeReducer.unlikeRecipe.uuid === this.state.uuid;
+        let prevLikeRecipe    = prevProps.recipeReducer.likeRecipe
 
         let currentUnlikeRecipe = this.props.recipeReducer.unlikeRecipe
-        let prevUnlikeRecipe = prevProps.recipeReducer.unlikeRecipe
+        let prevUnlikeRecipe    = prevProps.recipeReducer.unlikeRecipe
+
+        let isClickLike   = this.props.recipeReducer.likeRecipe.uuid === this.state.uuid;
+        let isClickUnLike = this.props.recipeReducer.unlikeRecipe.uuid === this.state.uuid;
 
         if ((currentLikeRecipe.data !== prevLikeRecipe.data) && isClickLike) {
             this.props.callBackRefresh()
         }
 
         if ((currentUnlikeRecipe.data !== prevUnlikeRecipe.data) && isClickUnLike) {
+            this.props.callBackRefresh()
+        }
+
+        let currentAddRecipeToList = this.props.recipeReducer.addRecipeToList
+        let prevAddRecipeToList    = prevProps.recipeReducer.addRecipeToList
+
+        let currentRemoveRecipeToList = this.props.recipeReducer.removeRecipeToList
+        let prevRemoveRecipeToList    = prevProps.recipeReducer.removeRecipeToList
+
+        let isClickAdd    = this.props.recipeReducer.addRecipeToList.uuid === this.state.uuid;
+        let isClickRemove = this.props.recipeReducer.removeRecipeToList.uuid === this.state.uuid;
+
+        if ((currentAddRecipeToList.data !== prevAddRecipeToList.data) && isClickAdd) {
+            this.props.callBackRefresh()
+        }
+
+        if ((currentRemoveRecipeToList.data !== prevRemoveRecipeToList.data) && isClickRemove) {
             this.props.callBackRefresh()
         }
     }
@@ -146,13 +237,32 @@ function mapDispatchToProps(dispatch) {
         postUnlikeRecipe: (uuid, id) => {
             dispatch(postUnlikeRecipe(uuid, id));
         },
+
+        addRecipeToList: (uuid, recipeId, recipeListId) => {
+            dispatch(addRecipeToList(uuid, recipeId, recipeListId));
+        },
+
+        removeRecipeToList: (uuid, recipeId, recipeListId) => {
+            dispatch(removeRecipeToList(uuid, recipeId, recipeListId));
+        },
     };
 }
 
 function mapStateToProps(state) {
     return {
         recipeReducer: state.recipe,
+        listRecipe   : state.listRecipe,
     }
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RecipeCard))
+
+const getListIds = (detailLists) => {
+    detailLists = detailLists ?? [];
+    let ids     = [];
+    detailLists.map((item) => {
+        ids.push(item.recipeListId)
+    })
+
+    return ids
+}

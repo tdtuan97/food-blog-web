@@ -245,6 +245,58 @@ export function reducer(state = initialState, action) {
                 },
             }
         }
+
+        case CONSTANTS.ADD_RECIPE_TO_LIST:
+            data = payload.data ?? {}
+            if (payload.success) {
+                pushMessageSuccess('Thêm vào danh sách thành công.')
+            }
+            return {
+                ...state,
+                addRecipeToList: {
+                    ...state.addRecipeToList,
+                    loading: false,
+                    data: data ?? {}
+                },
+                removeRecipeToList: {
+                    ...initialState.removeRecipeToList
+                }
+            }
+        case CONSTANTS.ADD_RECIPE_TO_LIST_LOADING: {
+            return {
+                ...state,
+                addRecipeToList: {
+                    ...state.addRecipeToList,
+                    uuid: payload.uuid,
+                    loading: true,
+                },
+            }
+        }
+        case CONSTANTS.REMOVE_RECIPE_TO_LIST:
+            if (payload.success) {
+                pushMessageSuccess('Xoá khỏi danh sách thành công.')
+            }
+            return {
+                ...state,
+                removeRecipeToList: {
+                    ...state.removeRecipeToList,
+                    loading: false,
+                    data: payload.success === true
+                },
+                addRecipeToList: {
+                    ...initialState.addRecipeToList
+                },
+            }
+        case CONSTANTS.REMOVE_RECIPE_TO_LIST_LOADING: {
+            return {
+                ...state,
+                removeRecipeToList: {
+                    ...state.removeRecipeToList,
+                    loading: true,
+                    uuid: payload.uuid,
+                },
+            }
+        }
         default:
             return state;
     }

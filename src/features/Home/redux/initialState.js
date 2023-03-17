@@ -29,6 +29,16 @@ const initialState = {
         data   : [],
         loading: false,
     },
+
+    recipeByFavorite: {
+        data   : [],
+        loading: false,
+    },
+
+    recipeByUserId: {
+        data   : [],
+        loading: false,
+    },
 };
 
 export default initialState;

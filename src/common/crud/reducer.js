@@ -24,6 +24,8 @@ export function reducer(state = initialState, action) {
                 428,
                 432,
                 438,
+                436,
+                439,
                 441,
                 442,
             ].indexOf(payload.status) === -1)) {

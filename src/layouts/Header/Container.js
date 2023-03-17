@@ -3,6 +3,7 @@ import President from './President';
 import { connect } from 'react-redux';
 import { clearToken, getAuthUser } from "@features/Auth/redux/actions";
 import { getRecipeByKeyword } from '@src/features/Home/redux/actions';
+import {getListRecipeManagement} from "@features/ListRecipe/redux/actions";
 
 class Container extends Component {
     onSearch = (value) => {
@@ -20,6 +21,7 @@ class Container extends Component {
 
     componentDidMount() {
         this.props.getAuthUser()
+        this.props.getListRecipeManagement()
     }
 }
 
@@ -33,6 +35,10 @@ function mapDispatchToProps(dispatch) {
         },
         getRecipeByKeyword: (keyword) => {
             dispatch(getRecipeByKeyword(keyword));
+        },
+
+        getListRecipeManagement: (userId) => {
+            dispatch(getListRecipeManagement(userId));
         },
     };
 }

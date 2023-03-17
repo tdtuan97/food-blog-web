@@ -251,7 +251,7 @@ function deleteRecipeCommentLoadingAction() {
  * Like recipe by id
  * @returns
  */
- export function postLikeRecipe(uuid, recipeId) {
+export function postLikeRecipe(uuid, recipeId) {
     return dispatch => {
         dispatch(postLikeRecipeLoadingAction(uuid))
         dispatch(apiPost(`favorite/create/${recipeId}`, {}, {}, postLikeRecipeAction))
@@ -278,7 +278,7 @@ function postLikeRecipeLoadingAction(uuid) {
  * Unlike recipe by id
  * @returns
  */
- export function postUnlikeRecipe(uuid, recipeId) {
+export function postUnlikeRecipe(uuid, recipeId) {
     return dispatch => {
         dispatch(postUnlikeRecipeLoadingAction(uuid))
         dispatch(apiDelete(`favorite/delete/${recipeId}`, {}, postUnlikeRecipeAction))
@@ -295,6 +295,60 @@ function postUnlikeRecipeAction(response) {
 function postUnlikeRecipeLoadingAction(uuid) {
     return {
         type   : CONSTANTS.RECIPE_UNLIKE_LOADING,
+        payload: {
+            uuid: uuid
+        }
+    };
+}
+
+/**
+ * Add recipe to list
+ * @returns
+ */
+export function addRecipeToList(uuid, recipeId, recipeListId) {
+    return dispatch => {
+        dispatch(addRecipeToListLoadingAction(uuid))
+        dispatch(apiPost(`recipeList/createRecipe/${recipeListId}/${recipeId}`, {}, {}, addRecipeToListAction))
+    };
+}
+
+function addRecipeToListAction(response) {
+    return {
+        type   : CONSTANTS.ADD_RECIPE_TO_LIST,
+        payload: response
+    };
+}
+
+function addRecipeToListLoadingAction(uuid) {
+    return {
+        type   : CONSTANTS.ADD_RECIPE_TO_LIST_LOADING,
+        payload: {
+            uuid: uuid
+        }
+    };
+}
+
+/**
+ * Remove recipe to list
+ * @returns
+ */
+export function removeRecipeToList(uuid, recipeId, recipeListId) {
+    return dispatch => {
+        dispatch(removeRecipeToListLoadingAction(uuid))
+        dispatch(apiDelete(`recipeList/deleteRecipe/${recipeListId}/${recipeId}`, {}, removeRecipeToListAction))
+    };
+}
+
+function removeRecipeToListAction(response) {
+    return {
+        type   : CONSTANTS.REMOVE_RECIPE_TO_LIST,
+        payload: response
+    };
+}
+
+function removeRecipeToListLoadingAction(uuid) {
+    return {
+        type   : CONSTANTS.REMOVE_RECIPE_TO_LIST_LOADING,
         payload: {
             uuid: uuid
         }

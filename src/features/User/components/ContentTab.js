@@ -21,13 +21,17 @@ class UserLabel extends Component {
         const {
                   isPublicProfile,
                   listRecipe,
-                  recipeByFollowUser,
+                  recipeByFavorite,
+                  recipeByUserId,
                   countFollowed,
                   countFollowing,
                   userFollow,
                   userFollowing,
                   callBackRefresh
               } = this.props
+
+        let recipeByUserIdData = recipeByUserId.data ?? {}
+        recipeByUserIdData = recipeByUserIdData.recipe ?? []
         return [
             {
                 key     : '1',
@@ -41,16 +45,26 @@ class UserLabel extends Component {
             },
             {
                 key     : '2',
-                label   : 'Yêu thích',
+                label   : `Công thức (${recipeByUserIdData ? recipeByUserIdData.length : 0})`,
                 children: <RecipeCarousel
-                    title="Công thức yêu thích"
+                    title="Công thức"
                     callBackRefresh={callBackRefresh}
-                    listRecipe={recipeByFollowUser.data}
-                    loading={recipeByFollowUser.loading}
+                    listRecipe={recipeByUserIdData}
+                    loading={recipeByUserId.loading}
                 />
             },
             {
                 key     : '3',
+                label   : `Yêu thích (${recipeByFavorite.data ? recipeByFavorite.data.length : 0})`,
+                children: <RecipeCarousel
+                    title="Công thức yêu thích"
+                    callBackRefresh={callBackRefresh}
+                    listRecipe={recipeByFavorite.data}
+                    loading={recipeByFavorite.loading}
+                />
+            },
+            {
+                key     : '4',
                 label   : `Đang theo dõi (${countFollowing})`,
                 children: <UserList
                     callBackRefresh={callBackRefresh}
@@ -59,7 +73,7 @@ class UserLabel extends Component {
                 />
             },
             {
-                key     : '4',
+                key     : '5',
                 label   : `Người theo dõi (${countFollowed})`,
                 children: <UserList
                     callBackRefresh={callBackRefresh}

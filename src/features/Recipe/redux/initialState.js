@@ -46,6 +46,18 @@ const initialState = {
         loading: false,
         uuid   : null,
     },
+
+    addRecipeToList: {
+        data   : false,
+        loading: false,
+        uuid   : null,
+    },
+
+    removeRecipeToList: {
+        data   : false,
+        loading: false,
+        uuid   : null,
+    },
 };
 
 export default initialState;

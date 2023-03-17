@@ -9,6 +9,8 @@ class President extends Component {
                   userFollowing,
                   listRecipe,
                   recipeByFollowUser,
+                  recipeByFavorite,
+                  recipeByUserId,
                   callBackRefresh
               } = this.props
 
@@ -24,7 +26,9 @@ class President extends Component {
                 />
                 <ContentTab
                     listRecipe={listRecipe}
+                    recipeByFavorite={recipeByFavorite}
                     recipeByFollowUser={recipeByFollowUser}
+                    recipeByUserId={recipeByUserId}
                     countFollowed={countFollowed}
                     countFollowing={countFollowing}
                     userFollow={userFollow}
