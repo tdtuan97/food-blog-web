@@ -1,7 +1,7 @@
 import initialState from "./initialState";
 import * as CONSTANTS from "./constants";
-import { RESET_ACTION } from "@features/Common/redux/constants";
-import { pushMessageSuccess } from "@src/layouts";
+import {RESET_ACTION} from "@features/Common/redux/constants";
+import {pushMessageSuccess} from "@src/layouts";
 
 export function reducer(state = initialState, action) {
     let payload = action.payload;
@@ -22,7 +22,7 @@ export function reducer(state = initialState, action) {
                 list: {
                     ...state.list,
                     loading: false,
-                    data: data ?? []
+                    data   : data ?? []
                 },
             }
         case CONSTANTS.RECIPE_MANAGEMENT_LOADING: {
@@ -41,7 +41,7 @@ export function reducer(state = initialState, action) {
                 add: {
                     ...state.add,
                     loading: false,
-                    data: data ?? {}
+                    data   : data ?? {}
                 },
             }
         case CONSTANTS.RECIPE_ADD_LOADING: {
@@ -60,7 +60,7 @@ export function reducer(state = initialState, action) {
                 delete: {
                     ...state.delete,
                     loading: false,
-                    data: data ?? {}
+                    data   : data ?? {}
                 },
             }
         case CONSTANTS.RECIPE_DELETE_LOADING: {
@@ -79,7 +79,7 @@ export function reducer(state = initialState, action) {
                 detail: {
                     ...state.detail,
                     loading: false,
-                    data: data ?? {}
+                    data   : data ?? {}
                 },
             }
         case CONSTANTS.RECIPE_DETAIL_LOADING: {
@@ -98,7 +98,7 @@ export function reducer(state = initialState, action) {
                 update: {
                     ...state.update,
                     loading: false,
-                    data: data ?? {}
+                    data   : data ?? {}
                 },
             }
         case CONSTANTS.RECIPE_UPDATE_LOADING: {
@@ -117,7 +117,7 @@ export function reducer(state = initialState, action) {
                 comments: {
                     ...state.comments,
                     loading: false,
-                    data: data ?? []
+                    data   : data ?? []
                 },
             }
         case CONSTANTS.RECIPE_COMMENTS_LOADING: {
@@ -133,10 +133,10 @@ export function reducer(state = initialState, action) {
             data = payload.data ?? {}
             return {
                 ...state,
-                postComment: {
+                postComment  : {
                     ...state.postComment,
                     loading: false,
-                    data: data ?? {}
+                    data   : data ?? {}
                 },
                 deleteComment: {
                     ...state.deleteComment,
@@ -159,7 +159,7 @@ export function reducer(state = initialState, action) {
                 updateComment: {
                     ...state.updateComment,
                     loading: false,
-                    data: data ?? {}
+                    data   : data ?? {}
                 },
                 deleteComment: {
                     ...state.deleteComment,
@@ -181,7 +181,7 @@ export function reducer(state = initialState, action) {
                 deleteComment: {
                     ...state.deleteComment,
                     loading: false,
-                    data: payload.success === true
+                    data   : payload.success === true
                 },
             }
         case CONSTANTS.RECIPE_COMMENT_DELETE_LOADING: {
@@ -201,10 +201,10 @@ export function reducer(state = initialState, action) {
             }
             return {
                 ...state,
-                likeRecipe: {
+                likeRecipe  : {
                     ...state.likeRecipe,
                     loading: false,
-                    data: data ?? {}
+                    data   : data ?? {}
                 },
                 unlikeRecipe: {
                     ...initialState.unlikeRecipe
@@ -215,7 +215,7 @@ export function reducer(state = initialState, action) {
                 ...state,
                 likeRecipe: {
                     ...state.likeRecipe,
-                    uuid: payload.uuid,
+                    uuid   : payload.uuid,
                     loading: true,
                 },
             }
@@ -229,9 +229,9 @@ export function reducer(state = initialState, action) {
                 unlikeRecipe: {
                     ...state.unlikeRecipe,
                     loading: false,
-                    data: payload.success === true
+                    data   : payload.success === true
                 },
-                likeRecipe: {
+                likeRecipe  : {
                     ...initialState.likeRecipe
                 },
             }
@@ -241,7 +241,7 @@ export function reducer(state = initialState, action) {
                 unlikeRecipe: {
                     ...state.unlikeRecipe,
                     loading: true,
-                    uuid: payload.uuid,
+                    uuid   : payload.uuid,
                 },
             }
         }
@@ -253,10 +253,10 @@ export function reducer(state = initialState, action) {
             }
             return {
                 ...state,
-                addRecipeToList: {
+                addRecipeToList   : {
                     ...state.addRecipeToList,
                     loading: false,
-                    data: data ?? {}
+                    data   : data ?? {}
                 },
                 removeRecipeToList: {
                     ...initialState.removeRecipeToList
@@ -267,7 +267,7 @@ export function reducer(state = initialState, action) {
                 ...state,
                 addRecipeToList: {
                     ...state.addRecipeToList,
-                    uuid: payload.uuid,
+                    uuid   : payload.uuid,
                     loading: true,
                 },
             }
@@ -281,9 +281,9 @@ export function reducer(state = initialState, action) {
                 removeRecipeToList: {
                     ...state.removeRecipeToList,
                     loading: false,
-                    data: payload.success === true
+                    data   : payload.success === true
                 },
-                addRecipeToList: {
+                addRecipeToList   : {
                     ...initialState.addRecipeToList
                 },
             }
@@ -293,7 +293,31 @@ export function reducer(state = initialState, action) {
                 removeRecipeToList: {
                     ...state.removeRecipeToList,
                     loading: true,
-                    uuid: payload.uuid,
+                    uuid   : payload.uuid,
+                },
+            }
+        }
+
+        case CONSTANTS.SWITCH_RECIPE_STATUS:
+            if (payload.success) {
+                pushMessageSuccess('Đổi trạng thái công thức thành công.')
+            }
+            return {
+                ...state,
+                switchRecipeStatus: {
+                    ...state.switchRecipeStatus,
+                    loading: false,
+                    data   : payload.success === true
+                },
+            }
+        case CONSTANTS.SWITCH_RECIPE_STATUS_LOADING: {
+            return {
+                ...state,
+                switchRecipeStatus: {
+                    ...state.switchRecipeStatus,
+                    loading: true,
+                    data   : null,
+                    uuid   : payload.uuid,
                 },
             }
         }

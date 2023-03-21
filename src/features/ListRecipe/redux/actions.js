@@ -63,7 +63,7 @@ export function postListRecipe(data) {
         dispatch(postListRecipeLoadingAction())
         dispatch(apiPost(`recipeList/createRecipeList/`, {
             name: data.name ?? "",
-            file: data.file ?? null,
+            recipeList: data.file ?? null,
         }, {}, postListRecipeAction))
     };
 }

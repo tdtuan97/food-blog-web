@@ -356,3 +356,30 @@ function removeRecipeToListLoadingAction(uuid) {
         }
     };
 }
+
+/**
+ * Switch recipe by id
+ * @returns
+ */
+export function postSwitchRecipeStatus(uuid, recipeId) {
+    return dispatch => {
+        dispatch(postSwitchRecipeStatusLoadingAction(uuid))
+        dispatch(apiPut(`recipe/updatePrivacyRecipe/${recipeId}`, {}, {}, postSwitchRecipeStatusAction))
+    };
+}
+
+function postSwitchRecipeStatusAction(response) {
+    return {
+        type   : CONSTANTS.SWITCH_RECIPE_STATUS,
+        payload: response
+    };
+}
+
+function postSwitchRecipeStatusLoadingAction(uuid) {
+    return {
+        type   : CONSTANTS.SWITCH_RECIPE_STATUS_LOADING,
+        payload: {
+            uuid: uuid
+        }
+    };
+}

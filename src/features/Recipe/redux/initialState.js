@@ -1,29 +1,29 @@
 const initialState = {
-    list: {
+    list         : {
         data   : [],
         loading: false,
     },
-    add: {
+    add          : {
         data   : {},
         loading: false,
     },
-    detail: {
+    detail       : {
         data   : {},
         loading: false,
     },
-    update: {
+    update       : {
         data   : {},
         loading: false,
     },
-    delete: {
+    delete       : {
         data   : {},
         loading: false,
     },
-    comments: {
+    comments     : {
         data   : [],
         loading: false,
     },
-    postComment: {
+    postComment  : {
         data   : {},
         loading: false,
     },
@@ -36,7 +36,7 @@ const initialState = {
         loading: false,
     },
 
-    likeRecipe: {
+    likeRecipe  : {
         data   : {},
         loading: false,
         uuid   : null,
@@ -55,6 +55,12 @@ const initialState = {
 
     removeRecipeToList: {
         data   : false,
+        loading: false,
+        uuid   : null,
+    },
+
+    switchRecipeStatus: {
+        data   : null,
         loading: false,
         uuid   : null,
     },

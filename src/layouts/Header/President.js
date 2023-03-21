@@ -61,7 +61,7 @@ class President extends Component {
                         </div>
                         <div className="search-input">
                             <Input.Search
-                                placeholder="Gõ nguyên liệu để tìm kiếm"
+                                placeholder="Gõ công thức cần tìm kiếm"
                                 bordered={false}
                                 onSearch={onSearch}
                                 enterButton={false}

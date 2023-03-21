@@ -4,6 +4,13 @@ import President from './President';
 import {getRecipeManagement} from "@features/Recipe/redux/actions";
 
 class Container extends Component {
+    callBackRefresh = () => {
+        let userId = localStorage.getItem('authUserId') ?? null
+        if (userId) {
+            this.props.getRecipeManagement(userId);
+        }
+    }
+
     render() {
         const {
                   list
@@ -11,6 +18,7 @@ class Container extends Component {
 
         return (
             <President
+                callBackRefresh={this.callBackRefresh}
                 list={list}
             />
         )
@@ -18,7 +26,7 @@ class Container extends Component {
 
     componentDidMount() {
         let userId = localStorage.getItem('authUserId') ?? null
-        if (userId){
+        if (userId) {
             this.props.getRecipeManagement(userId);
         }
     }

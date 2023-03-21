@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 
 class UserRecipes extends Component {
     render() {
-        const {title, listRecipe, loading} = this.props
+        const {title, listRecipe, loading, callBackRefresh} = this.props
 
         let listRecipeData = listRecipe.recipe ?? []
         return (
@@ -35,7 +35,9 @@ class UserRecipes extends Component {
                                 listRecipeData.map((recipe, i) => {
                                     return (
                                         <Col span={6} key={i}>
-                                            <RecipeItem recipe={recipe}/>
+                                            <RecipeItem
+                                                callBackRefresh={callBackRefresh}
+                                                recipe={recipe}/>
                                         </Col>
                                     )
                                 }) : null)

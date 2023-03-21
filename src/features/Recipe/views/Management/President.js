@@ -5,6 +5,7 @@ class President extends Component {
     render() {
         const {
                   list,
+                  callBackRefresh
               } = this.props
 
         return (
@@ -13,6 +14,7 @@ class President extends Component {
                     title="Quản lý công thức"
                     listRecipe={list.data}
                     loading={list.loading}
+                    callBackRefresh={callBackRefresh}
                 />
             </div>
         );

@@ -58,7 +58,7 @@ class RecipeFilter extends Component {
                                             <div
                                                 className={"badge-selections" + (ingredientSelected === item.ingredientId ? " selected" : "")}
                                                 onClick={onSelectedIngredient}
-                                                data-id={item.ingredientId}
+                                                data-id={item.name}
                                             >
                                                 <div className="badge-icon">
                                                     {
